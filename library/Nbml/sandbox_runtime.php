@@ -3,7 +3,6 @@
 use \Nbml\AutoLoader\ClassAutoLoader;
 use \Nbml\AutoLoader\ViewAutoLoader;
 use \Nbml\Compiler;
-use \Nbml\Loader;
 
 require_once __DIR__ . '/AutoLoader/ViewAutoLoader.php';
 require_once __DIR__ . '/AutoLoader/ClassAutoLoader.php';

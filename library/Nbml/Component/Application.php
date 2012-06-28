@@ -32,6 +32,29 @@ use \Nbml\Component;
 class Application extends Component
 {
 
+    /**
+     * @var Application
+     */
+    static protected $instance = null;
+
+    public function __construct()
+    {
+        static::$instance = $this;
+    }
+
+    /**
+     * @static
+     * @return Application
+     */
+    static public function getInstance()
+    {
+        if (!static::$instance) {
+            $class = get_called_class();
+            static::$instance = new $class();
+        }
+        return static::$instance;
+    }
+
     public function body($value = null)
     {
         if ($value) {
