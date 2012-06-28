@@ -1,0 +1,5 @@
+<?php /** @var $this \Nbml\ClassBuilder */; ?>
+
+<?php foreach($this->getVariableBuilders() as /** @var $var \Nbml\ClassBuilder\VariableBuilder */ $var): ?>
+    <?php echo $var->getGetterAndSetter(); ?>
+<?php endforeach; ?>

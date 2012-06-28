@@ -1,0 +1,7 @@
+<?php /** @var $this \Nbml\ClassBuilder */; ?>
+
+<?php foreach($this->getVariableBuilders() as $var): ?>
+	<?php
+	/** @var $var \Nbml\ClassBuilder\VariableBuilder */
+	echo $var->getInitializationCode(); ?>
+<?php endforeach; ?>

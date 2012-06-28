@@ -1,0 +1,33 @@
+<?php /** @var $this \Nbml\ClassBuilder */; ?>
+<?php echo '<?php' . PHP_EOL; ?>
+<?php echo $this->getNamespaceDeclaration(); ?>
+
+
+class <?php echo $this->getReflection()->getClassName(); ?> extends <?php echo $this->getReflection()->getContext(); ?>
+
+{
+
+  static public $DIR = '<?php echo $this->getFilePath(); ?>';
+
+  /**
+   * @return <?php echo $this->getReflection()->getFullClassName() . PHP_EOL; ?>
+   */
+  static public function create() {
+    return new <?php echo $this->getReflection()->getFullClassName(); ?>();
+  }
+
+<?php echo $this->renderPhtml('options_declaration'); ?>
+
+
+	public function __construct()
+	{
+		<?php echo $this->renderPhtml('initializators') . PHP_EOL; ?>
+	}
+
+	<?php echo $this->renderPhtml('getters_and_setters'); ?>
+
+    <?php echo $this->renderPhtml('invoke'); ?>
+}
+
+
+

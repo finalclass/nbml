@@ -1,0 +1,11 @@
+<?php /** @var $this \Nbml\ClassBuilder\VariableBuilder */ ?>
+
+	/**
+	 * @param $value
+	 * @return <?php echo $this->getClassName() . PHP_EOL; ?>
+	 */
+	public function <?php echo $this->getReflection()->getName(); ?>($value)
+	{
+		<?php echo $this->getSetter(); ?>
+		return $this;
+	}

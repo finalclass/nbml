@@ -1,0 +1,23 @@
+<?php /** @var $this \Nbml\ClassBuilder */; ?>
+
+    /**
+     * @return <?php echo $this->getReflection()->getFullClassName() . PHP_EOL; ?>
+     */
+    public function __invoke()
+    {
+       <?php foreach($this->getVariableBuilders()
+                     as /** @var $var \Nbml\ClassBuilder\VariableBuilder */ $var): ?>
+       <?php echo $var->getBeforeRenderRetrieveCode(); ?>
+       <?php endforeach; ?>
+       ob_start();
+
+       <?php $content = $this->getReflection()->getContent(); ?>
+       <?php echo '?>' . $content ; ?>
+
+        <?php if(strrpos($content, '?>') > strrpos($content, '<?php')): ?>
+            <?php echo '<?php'; ?>
+        <?php endif; ?>
+
+       $this->text = ob_get_clean();
+       return $this;
+    }
