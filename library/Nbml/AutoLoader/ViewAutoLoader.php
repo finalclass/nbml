@@ -47,7 +47,7 @@ class ViewAutoLoader extends AbstractAutoLoader
 	public function autoload($className)
 	{
 		$classNameDirNotation = str_replace(array('\\', '_'), DIRECTORY_SEPARATOR, $className);
-        $classNameExploded = explode(DIRECTORY_SEPARATOR, $className);
+        $classNameExploded = explode('\\', $className);
         $classShortName = end($classNameExploded);
         $defaultDestinationDir = $this->getCompilerDefaultDestinationDir();
         $defaultDestinationDir = str_replace(array('\\', '/'), DIRECTORY_SEPARATOR, $defaultDestinationDir);
