@@ -118,6 +118,8 @@ class Application extends Component
 
     public function __toString()
     {
+        //Render children first so that they can add scripts, styles or set title and other meta
+        $content = $this->__invoke()->text;
         ob_start();
         ?>
     <!DOCTYPE>
@@ -134,7 +136,7 @@ class Application extends Component
         <?php endforeach; ?>
     </head>
     <body>
-        <?php echo $this->__invoke()->text; ?>
+        <?php echo $content; ?>
     </body>
     </html>
     <?php
