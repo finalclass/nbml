@@ -1,6 +1,5 @@
 <?php
 /**
-
 Copyright (C) Szymon Wygnanski (s@finalclass.net)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -21,33 +20,50 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-namespace Nbml;
-use \Nbml\Reflector\Variable;
-use \Nbml\Reflector\MetadataTagDefinition;
-use \Nbml\Reflector;
+namespace Nbml\MetadataTag;
+use \Nbml\MetadataTag\AbstractMetadataTag;
 /**
  * @author: Sel <s@finalclass.net>
- * @date: 05.04.12
- * @time: 12:34
+ * @date: 29.06.12
+ * @time: 19:18
  */
-interface MetadataTag
+class CssMetadataTag extends AbstractMetadataTag
 {
     /**
      * Returns [TagName] of the metadata tag
      *
      * @return string
      */
-    static function getMetadataTagName();
-    function __construct(Variable $variable, MetadataTagDefinition $definition, Reflector $classReflection);
-    function hasGetter();
-    function getGetterMethodDefinition();
-    function hasSetter();
-    function getSetterMethodDefinition();
-    function hasInitializationCode();
-    function getInitializationCode();
-    function hasBeforeRenderRetrievalCode();
-    function getBeforeRenderRetrieveCode();
-    function getRequiredProperties();
-    function hasDefaultProperty();
-    function getDefaultPropertyName();
+    static function getMetadataTagName()
+    {
+        return 'Css';
+    }
+
+    public function getRequiredProperties()
+    {
+        return array('file');
+    }
+
+    public function getDefaultPropertyName()
+    {
+        return 'file';
+    }
+
+    public function getInitializationCode()
+    {
+        $css = trim($this->definition->getDefaultProperty());
+        if(isset($css[0]) && $css[0] != '/') {
+            $css = str_replace('\\', '/', $this->classReflection->getFullClassName())
+                    . '/' . $css;
+        }
+        ob_start();
+        ?>
+
+            \Nbml\Component\Application::getInstance()
+                ->styleSheets()->add('<?php echo $css;?>');
+
+        <?php
+        return ob_get_clean();
+    }
+
 }

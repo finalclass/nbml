@@ -74,10 +74,8 @@ class Server
         if ($config) {
             if (is_array($config)) {
                 $this->config = new Config($config);
-                $this->initConfig($this->config);
             } else if ($config instanceof Config) {
                 $this->config = $config;
-                $this->initConfig($this->config);
             } else {
                 throw new WrongServerConfig('Type of constructor parameter is wrong.
                         Please provide array or \Nbml\Server\Config instance');
@@ -89,12 +87,6 @@ class Server
         }
         return $this->config;
     }
-
-    private function initConfig(Config $config)
-    {
-        $config->metadataTags()->add('\Nbml\MetadataTag\InjectMetadataTag');
-    }
-
 
     public function __toString()
     {

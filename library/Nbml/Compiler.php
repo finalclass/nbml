@@ -54,7 +54,6 @@ class Compiler
   public function compile($className, $filePath)
   {
     $reflection = $this->reflectClass($className, $filePath);
-
     $builder = new ClassBuilder($filePath, $reflection, $this->tagProcessors);
     return $builder->build();
   }

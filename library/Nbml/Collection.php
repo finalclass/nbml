@@ -40,7 +40,7 @@ class Collection implements \IteratorAggregate, \Countable
 
     public function add($item, $position = null)
     {
-        if ($position === null) {
+        if ($position !== null) {
             $this->data[$position] = $item;
         } else {
             $this->data[] = $item;

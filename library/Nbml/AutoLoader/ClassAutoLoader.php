@@ -16,7 +16,7 @@ class ClassAutoLoader extends AbstractAutoLoader
     public function autoload($className)
     {
 	    $classNameDirNotation = str_replace(array('\\', '_'), DIRECTORY_SEPARATOR, $className);
-	    $classNameExploded = explode(DIRECTORY_SEPARATOR, $classNameDirNotation);
+	    $classNameExploded = explode('\\', $classNameDirNotation);
 	    $classNameLastPart = end($classNameExploded);
         foreach ($this->getIncludePaths() as $dir => $bool) {
 	        $noExtensionPath = $dir . DIRECTORY_SEPARATOR . $classNameDirNotation;

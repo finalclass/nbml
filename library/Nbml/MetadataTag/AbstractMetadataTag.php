@@ -25,6 +25,7 @@ namespace Nbml\MetadataTag;
 use \Nbml\Reflector\Variable;
 use \Nbml\Reflector\MetadataTagDefinition;
 use \Nbml\MetadataTag;
+use \Nbml\Reflector;
 /**
  * @author: Sel <s@finalclass.net>
  * @date: 30.03.12
@@ -45,10 +46,16 @@ abstract class AbstractMetadataTag implements MetadataTag
 	 */
 	protected $definition;
 
-	public function __construct(Variable $variable, MetadataTagDefinition $definition)
+    /**
+     * @var \Nbml\Reflector
+     */
+    protected $classReflection;
+
+	public function __construct(Variable $variable, MetadataTagDefinition $definition, Reflector $classReflection)
 	{
 		$this->variable = $variable;
 		$this->definition = $definition;
+        $this->classReflection = $classReflection;
 	}
 
 	// ---------------------

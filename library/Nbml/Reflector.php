@@ -71,6 +71,11 @@ class Reflector
 	 */
 	private $definitionContent = '';
 
+    /**
+     * @var Variable
+     */
+    private $thisVar = null;
+
 	public function __construct($viewClassName, $viewTextContent)
 	{
         $classNameExploded = explode('\\', $viewClassName);
@@ -119,6 +124,7 @@ class Reflector
 
 			if(preg_match('#\@var\s*\$this#', $line)) {
 				//if found string like that: "@var $this"
+                $this->thisVar = new Variable(join(PHP_EOL, $buffer));
 				$buffer = array();
 				continue;
 			}
@@ -153,6 +159,11 @@ class Reflector
     public function getNamespace()
     {
         return $this->namespace;
+    }
+
+    public function getThisVariable()
+    {
+        return $this->thisVar;
     }
 
     /**

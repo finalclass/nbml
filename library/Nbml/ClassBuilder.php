@@ -36,76 +36,85 @@ use \Nbml\ClassBuilder\VariableBuilder;
 class ClassBuilder
 {
 
-	/** @var \Nbml\Reflector */
-	private $reflection;
+    /** @var \Nbml\Reflector */
+    private $reflection;
 
-	/**
-	 * @var \Nbml\ClassBuilder\VariableBuilder[]
-	 */
-	private $variableBuilders = array();
+    /**
+     * @var \Nbml\ClassBuilder\VariableBuilder[]
+     */
+    private $variableBuilders = array();
 
-	/** @var string[] */
-	private $tagProcessors = array();
+    /** @var string[] */
+    private $tagProcessors = array();
 
-  /** @var string */
-  private $filePath = '';
+    /** @var string */
+    private $filePath = '';
 
-	public function __construct($filePath, Reflector $reflection, $tagProcessors = array())
-	{
-    $this->filePath = $filePath;
-		$this->reflection = $reflection;
-		$this->tagProcessors = $tagProcessors;
-		foreach($this->reflection->getVariables() as $var) {
-			$this->variableBuilders[$var->getName()] =
-					new VariableBuilder(
-						$var,
-						$this->getReflection()->getClassName(),
-						$this->tagProcessors);
-		}
-	}
+    public function __construct($filePath, Reflector $reflection, $tagProcessors = array())
+    {
+        $this->filePath = $filePath;
+        $this->reflection = $reflection;
+        $this->tagProcessors = $tagProcessors;
+        foreach ($this->reflection->getVariables() as $var) {
+            $this->variableBuilders[$var->getName()] =
+                    new VariableBuilder(
+                        $var,
+                        $this->getReflection(),
+                        $filePath,
+                        $this->tagProcessors
+                        );
+        }
+        $thisVar = $this->reflection->getThisVariable();
+        $this->variableBuilders['this'] = new VariableBuilder(
+            $thisVar,
+            $this->getReflection(),
+            $filePath,
+            $this->tagProcessors
+        );
+    }
 
-	public function build()
-	{
-		return $this->renderPhtml('class');
-	}
+    public function build()
+    {
+        return $this->renderPhtml('class');
+    }
 
-	private function renderPhtml($file)
-	{
-		ob_start();
-		include __DIR__
+    private function renderPhtml($file)
+    {
+        ob_start();
+        include __DIR__
                 . DIRECTORY_SEPARATOR . 'ClassBuilder'
                 . DIRECTORY_SEPARATOR . $file . '.phtml';
-		return ob_get_clean();
-	}
+        return ob_get_clean();
+    }
 
-	public function getNamespaceDeclaration()
-	{
+    public function getNamespaceDeclaration()
+    {
         $ns = $this->reflection->getNamespace();
-        if($ns) {
+        if ($ns) {
             return 'namespace ' . $this->reflection->getNamespace() . ';';
         }
         return '';
-	}
+    }
 
-	/**
-	 * @return \Nbml\Reflector
-	 */
-	public function getReflection()
-	{
-		return $this->reflection;
-	}
+    /**
+     * @return \Nbml\Reflector
+     */
+    public function getReflection()
+    {
+        return $this->reflection;
+    }
 
-	/**
-	 * @return \Nbml\ClassBuilder\VariableBuilder[]
-	 */
-	public function getVariableBuilders()
-	{
-		return $this->variableBuilders;
-	}
+    /**
+     * @return \Nbml\ClassBuilder\VariableBuilder[]
+     */
+    public function getVariableBuilders()
+    {
+        return $this->variableBuilders;
+    }
 
-  public function getFilePath()
-  {
-    return $this->filePath;
-  }
+    public function getFilePath()
+    {
+        return $this->filePath;
+    }
 
 }

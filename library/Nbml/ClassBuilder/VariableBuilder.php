@@ -27,6 +27,7 @@ use \Nbml\Reflector\Variable;
 use \Nbml\MetadataTag;
 use \Nbml\Reflector\MetadataTagDefinition;
 use \Nbml\Exception\MetadataTagNotExists;
+use \Nbml\Reflector;
 
 /**
  * @author: Sel <s@finalclass.net>
@@ -56,11 +57,17 @@ class VariableBuilder
      */
     private $className;
 
-    public function __construct(Variable $variableReflection, $className, $allMetadataTagClasses = array())
+    private $classReflection;
+
+    private $filePath;
+
+    public function __construct(Variable $variableReflection, Reflector $classReflection, $filePath, $allMetadataTagClasses = array())
     {
         $this->reflection = $variableReflection;
+        $this->filePath = $filePath;
         $this->allMetadataTagClasses = $allMetadataTagClasses;
-        $this->className = $className;
+        $this->classReflection = $classReflection;
+        $this->className = $classReflection->getClassName();
         foreach ($this->reflection->getMetadataTags() as $tag) {
             $this->metadataTags[$tag->getTagName()] = $this->createTagProcessor($tag);
         }
@@ -78,7 +85,7 @@ class VariableBuilder
             throw new MetadataTagNotExists('Tag ' . $tag->getTagName() . ' does not exists
 			or cannot load class ' . $processorClassName);
         }
-        return new $processorClassName($this->reflection, $tag);
+        return new $processorClassName($this->reflection, $tag, $this->classReflection);
     }
 
     public function getInitializationCode()
@@ -90,6 +97,9 @@ class VariableBuilder
                 //@TODO initialization for simple types
                 return '';
             } else {
+                if($this->getReflection()->getName() == 'this') {
+                    return '';
+                }
                 return '$this->options[\'' . $this->reflection->getNameUnderscored() . '\']'
                         . ' = new ' . $this->reflection->getType()
                         . '(' . $this->reflection->getDefaultValue() . ');'
@@ -166,6 +176,9 @@ class VariableBuilder
     {
         $tag = $this->getTagByHasFunction('hasBeforeRenderRetrievalCode');
         if (!$tag) {
+            if($this->getReflection()->getName() == 'this') {
+                return '';
+            }
             return '$' . $this->reflection->getName() . ' = $this->options[\''
                     . $this->reflection->getNameUnderscored()
                     . '\'];' . PHP_EOL;
@@ -176,6 +189,11 @@ class VariableBuilder
     public function getClassName()
     {
         return $this->className;
+    }
+
+    public function getFilePath()
+    {
+        return $this->filePath;
     }
 
 }
