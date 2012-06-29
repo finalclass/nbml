@@ -62,7 +62,12 @@ class OnStateMetadataTag extends AbstractMetadataTag
         ?>
     if($this->options['current_state'] == '<?php echo $state; ?>') {
         if(!isset($this->options['<?php echo $name_und; ?>'])) {
+            <?php if($this->variable->isSimpleType()): ?>
+            $this->options['<?php echo $name_und; ?>'] = <?php echo $default; ?>;
+            <?php else: ?>
             $this->options['<?php echo $name_und; ?>'] = new <?php echo $type . '(' . $default; ?>);
+            <?php endif; ?>
+
         }
         return $this->options['<?php echo $name_und; ?>'];
     } else {

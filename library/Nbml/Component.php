@@ -34,6 +34,11 @@ class Component
 
     protected $options = array();
 
+    public function __construct($options = array())
+    {
+        $this->options = $options;
+    }
+
     public function __toString()
     {
         try {

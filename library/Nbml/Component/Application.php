@@ -88,16 +88,20 @@ class Application extends Component
         return $this->options['scripts'];
     }
 
+    /**
+     * @param null $value
+     * @return Application|\Nbml\Collection
+     */
     public function styleSheets($value = null)
     {
         if ($value) {
-            $this->options['scripts'] = $value;
+            $this->options['style_sheets'] = $value;
             return $this;
         }
-        if (!isset($this->options['scripts'])) {
-            $this->options['scripts'] = new \Nbml\Collection();
+        if (!isset($this->options['style_sheets'])) {
+            $this->options['style_sheets'] = new \Nbml\Collection();
         }
-        return $this->options['scripts'];
+        return $this->options['style_sheets'];
     }
 
     public function charset($value = null)

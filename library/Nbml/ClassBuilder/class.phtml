@@ -19,8 +19,9 @@ class <?php echo $this->getReflection()->getClassName(); ?> extends <?php echo $
 <?php echo $this->renderPhtml('options_declaration'); ?>
 
 
-	public function __construct()
+	public function __construct($options = array())
 	{
+        parent::__construct($options);
 		<?php echo $this->renderPhtml('initializators') . PHP_EOL; ?>
 	}
 
