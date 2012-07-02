@@ -179,10 +179,12 @@ class VariableBuilder
             if($this->getReflection()->getName() == 'this') {
                 return '';
             }
+
             return '$' . $this->reflection->getName() . ' = $this->options[\''
                     . $this->reflection->getNameUnderscored()
                     . '\'];' . PHP_EOL;
         }
+
         return $tag->getBeforeRenderRetrieveCode();
     }
 

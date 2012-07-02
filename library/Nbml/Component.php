@@ -36,7 +36,7 @@ class Component
 
     public function __construct($options = array())
     {
-        $this->options = $options;
+        $this->options = array_merge($this->options, $options);
     }
 
     public function __toString()

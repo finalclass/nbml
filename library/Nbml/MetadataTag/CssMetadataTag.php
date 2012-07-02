@@ -60,7 +60,7 @@ class CssMetadataTag extends AbstractMetadataTag
         ?>
 
             \Nbml\Component\Application::getInstance()
-                ->styleSheets()->add('<?php echo $css;?>');
+                                ->styleSheets()->add('<?php echo $css;?>');
 
         <?php
         return ob_get_clean();
