@@ -15,9 +15,8 @@ $classAutoLoader
 $viewAutoLoader = new ViewAutoLoader();
 $viewAutoLoader
         ->setAlwaysCompile(true)
-		->addIncludePath(__DIR__ . '/../')
+		->addIncludePath(getcwd())
 		->register();
-
 
 $viewCompiler = new Compiler();
 $viewCompiler
@@ -29,6 +28,5 @@ $viewCompiler
         ->addTagProcessor('\Nbml\MetadataTag\JsMetadataTag');
 
 $viewAutoLoader->setViewCompiler($viewCompiler);
-
 
 return $viewAutoLoader;
