@@ -1,11 +1,11 @@
 # Jak to działa? [how-does-it-work]
 
-Koncepcja jest dość prosta. Piszemy pliki *.nbml które to są interpretowane do plików *.php. Konkretnie to klas php.
-Pliki *.nbml są zwykłymi plikami html z przeplatanym php. Czyli standardowe pliki szablonów php (często rozszerzeniem
+Koncepcja jest dość prosta. Piszemy pliki *.nbml które to są interpretowane do plików *.php. Konkretnie - do klas php.
+Pliki *.nbml są zwykłymi plikami html z przeplatanym php, czyli standardowymi plikami szablonów php (często rozszerzeniem
 takich plików jest *.phtml). Następnie tworzona jest z nich klasa.
-Schematycznie można to pokazać w ten sposób.
+Schematycznie można to pokazać w ten sposób:
 
-Załóżmy, że mamy taki o to plik *.nbml:
+Załóżmy, że mamy taki oto plik *.nbml:
 
   <?php /**
    * @var $this \Nbml\Component
@@ -20,7 +20,7 @@ Teraz gdzieś w pliku *.php wykonajmy następujące polecenie:
   $exampleComponent = new \MyNamespace\Example();
   echo $exampleComponent
 
-W momencie użycja klasy \MyNamespace\Example zostanie pobrany plik MyNamespace/Example/Example.nbml, skompilowany do klasy
+W momencie użycia klasy \MyNamespace\Example zostanie pobrany plik MyNamespace/Example/Example.nbml, skompilowany do klasy
 \MyNamespace\Example oraz dołączony (require_once).
 
 **Schematycznie** treść wygenerowanego pliku php będzie następująca:

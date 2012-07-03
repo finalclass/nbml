@@ -1,7 +1,7 @@
 # Hello World example [hello-world-example]
 
-Jak to zostało przyjęte, pierwszym krokiem w nowym języku powinno byćutworzenie programu Hello World:)
-nbml oczywiście stanał na wysokości zadania i takowy program wam prezentuje.
+Jak to zostało przyjęte, pierwszym krokiem w nowym języku powinno być utworzenie programu Hello World:)
+nbml oczywiście stanął na wysokości zadania i takowy program wam prezentuje.
 
 Zakładam taką strukturę katalogów:
 

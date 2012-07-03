@@ -45,7 +45,7 @@ Instalacja zakłada, że posiadasz taką strukturę katalogów:
 * tmp
 
 A teraz po kolei. Załączami pliki klas Autoloaderów (ViewAutoLoader oraz ClassAutoLoader).
-Następnia należy zainicjalizować ClassAutoLoader w celu poprawnego ładowania klas kompilatora Nbml.
+Następnie należy zainicjalizować ClassAutoLoader w celu poprawnego ładowania klas kompilatora Nbml.
 
 	$classAutoLoader = new ClassAutoLoader();
 	$classAutoLoader
@@ -61,10 +61,10 @@ Teraz możemy bez obaw inicjalizować autoloader do klas *.nbml
 			->addIncludePath(__DIR__ . '/../library')
 			->register();
 
-Powyższy skrypt zakłada, że pliki *.nbml znajdują się w folderze library oraz, że po kompilacji będą one umieszczane
-w folderze tmp. Autoloader jest ustawiony w ten sposób, że niezależnie od tego czy plik był zmieniony czy nie będzie
+Powyższy skrypt zakłada, że pliki *.nbml znajdują się w folderze library, oraz że po kompilacji będą one umieszczane
+w folderze tmp. Autoloader jest ustawiony w ten sposób, że niezależnie od tego czy plik był zmieniony czy nie, będzie
 on kompilowany każdorazowo przy wywołaniu autoloadera. Jest to bardzo czasochłonne i w środowisku stabilnym należy
-ją wyłączyć. Gdy opcja setAlwaysCompile zostanie ustawiona na false kompilator będzie uruchamiany **tylko** w przypadku
+to wyłączyć. Gdy opcja setAlwaysCompile zostanie ustawiona na false, kompilator będzie uruchamiany **tylko** w przypadku
 gdy czas ostatniej zmiany pliku *.nbml jest większy od czasu ostatniej zmiany wygenerowanego pliku *.php
 
 Następnie pozostaje nam utworzenie instancji kompilatora i dodanie jej do autoloadera.
@@ -78,5 +78,5 @@ Następnie pozostaje nam utworzenie instancji kompilatora i dodanie jej do autol
 
 Operacja ta jest odseparowana od ViewAutoLoader w celu większej customizacji - możesz utworzyć własny kompilator,
 czy rozszerzyć istneiejący wedle uznania.
-Dołanczase są standardowe metadata tagi [metadata-tags]. W tym miejscu możesz załączyć własne lub wyłączyć
-nie używane w celu poprawy czytelności kodu.
+Dołączane są standardowe metadata tagi [metadata-tags]. W tym miejscu możesz załączyć własne, lub wyłączyć
+nieużywane w celu poprawy czytelności kodu.

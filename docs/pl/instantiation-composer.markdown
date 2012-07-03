@@ -1,7 +1,7 @@
 ## Composer (polecana metoda) [instantiation-composer]
 
-Nbml może być znaleziony również w packagist co sprawia korzystanie z composera o wiele prostrzym.
-Zaprazentuję w jaki sposó możemy skorzystać z composera do założenia nowego projektu.
+Nbml może być znaleziony również w packagist co czyni korzystanie z composera o wiele prostszym.
+Zaprezentuję w jaki sposób możemy skorzystać z composera do założenia nowego projektu.
 
 Załóżmy, że posiadamy taką strukturę katalogów / plików:
 
@@ -29,11 +29,11 @@ Treść naszego pliku **composer.json** powinna wyglądać następująco:
 		}
 	}
 
-Gdzie MyNamespace jest twoją przestrzenią nazw - dowolnym łańcuchem znaków.
+gdzie MyNamespace jest twoją przestrzenią nazw - dowolnym łańcuchem znaków.
 Zwróć uwagę na blok require: `"finalclass/nbml":"dev-master",` - zakładam tutaj użycie wersji developerskiej
-pakietu nbml. Nie jest to zalezane rozwiązanie. Wprowadź tutaj wersję najbardziej ci odpowiadającą.
-Gdy utworzymy i zapiszemu już ten plik należy uruchomić skrypt composer.phar, będąc w katalogu
-z tworzonym projektem w ten sposób:
+pakietu nbml. Nie jest to zalecane rozwiązanie - wprowadź tutaj wersję najbardziej ci odpowiadającą.
+Gdy utworzymy i zapiszemy ten plik, należy uruchomić skrypt composer.phar będąc w katalogu
+z tworzonym projektem, w ten sposób:
 
 	php composer.phar install
 
@@ -47,7 +47,7 @@ Treść pliku **index.php**
 	$autoLoader = include '../vendor/autoload.php';
 	$viewAutoLoader = include '../src/init_view_auto_loader.php';
 
-Jak widać jest tutaj zaincludowany plik autoloadera dołączony przez composer. Dzięki temu niema konieczności
+Jak widać jest tutaj zaincludowany plik autoloadera dołączony przez composer. Dzięki temu nie ma konieczności
 tworzenia instancji ClassAutoLoader dostarczonej przez Nbml.
 W index.php jest również includowany plik init_view_auto_loader.php którego treść jest następująca:
 
@@ -78,5 +78,5 @@ Treść pliku **/src/init_view_auto_loader.php**
 
 	return $viewAutoLoader;
 
-Jest to identyczny plik jak w przypadku instalacji manualnej [instantiation-manual] z tym, że niema tutaj
+Jest to identyczny plik jak w przypadku instalacji manualnej [instantiation-manual] z tym, że nie ma tutaj
 tworzenia instancji ClassAutoLoader.

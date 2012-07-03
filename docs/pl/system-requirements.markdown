@@ -1,3 +1,3 @@
 # Wymagania systemowe [system-requirements]
 
-Bibliotek nbml wymaga php w wersji minimum 5.3
+Biblioteka nbml wymaga PHP w wersji minimum 5.3
