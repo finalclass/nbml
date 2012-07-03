@@ -1,24 +1,24 @@
 <h1 id="welcome">NetBricks Markup Language</h1>
 
-<p>Nbml jest językiem służącym do definiowania widoków w sposób obiektowy. Za jego pomocą w łatwy sposób możemy przekształcić widok w formacie phtml (html ze wstawkami w języku php) do klas php.</p>
+<p>Nbml jest językiem służącym do definiowania widoków w sposób obiektowy. Za jego pomocą w łatwy sposób możemy przekształcić widok w formacie phtml (html ze wstawkami w języku php), do klas php.</p>
 
 <p>Szymon Wygnański</p>
 
 <h1 id="system-requirements">Wymagania systemowe</h1>
 
-<p>Bibliotek nbml wymaga php w wersji minimum 5.3</p>
+<p>Biblioteka nbml wymaga PHP w wersji minimum 5.3</p>
 
 <h1 id="instantiation">Tworzenie instancji</h1>
 
 <p>Aby rozpocząć pracę z plikami nbml należy zainicjalizować ViewAutoLoader. Klasa ta rejestruje php autoloader
-tak aby obsługiwał plik *.nbml. Można to zrobić korzystająć z dostarczonego sandboxa lub manualnie.
-Należy również zainicjalizować jakiś autoloader do klas biblioteki Nbml ponieważ Nbml korzysta ze standardowego
- sposobu ładowania klas ta czynność jest pozostawiona programiście. Przejdźmy najpierw jednak do prostrzego
- rozpoczęcia pracy z wykorzystaniem pliku sandbox <a href="#instantiation-sandbox">instantiation-sandbox</a>.</p>
+tak, aby obsługiwał plik *.nbml. Można to zrobić korzystając z dostarczonego sandboxa lub manualnie.
+Należy również zainicjalizować jakiś autoloader do klas biblioteki nbml, ponieważ nbml korzysta ze standardowego
+ sposobu ładowania klas, ta czynność jest pozostawiona programiście. Przejdźmy najpierw jednak do prostszego
+ wariantu - rozpoczęcia pracy z wykorzystaniem pliku sandbox <a href="#instantiation-sandbox">instantiation-sandbox</a>.</p>
 
 <h3 id="instantiation-sandbox">Sandbox</h3>
 
-<p>Jest to najprostrza i zaraz naj mniej elastyczna forma zainicjalizowania nbmla.</p>
+<p>Jest to najprostsza i zarazem najmniej elastyczna forma zainicjalizowania nbmla.</p>
 
 <pre><code>$viewAutoLoader = include 'library/Nbml/sandbox_runtime.php';
 </code></pre>
@@ -77,7 +77,7 @@ $viewAutoLoader-&gt;setViewCompiler($viewCompiler);
 </ul>
 
 <p>A teraz po kolei. Załączami pliki klas Autoloaderów (ViewAutoLoader oraz ClassAutoLoader).
-Następnia należy zainicjalizować ClassAutoLoader w celu poprawnego ładowania klas kompilatora Nbml.</p>
+Następnie należy zainicjalizować ClassAutoLoader w celu poprawnego ładowania klas kompilatora Nbml.</p>
 
 <pre><code>$classAutoLoader = new ClassAutoLoader();
 $classAutoLoader
@@ -95,10 +95,10 @@ $viewAutoLoader
         -&gt;register();
 </code></pre>
 
-<p>Powyższy skrypt zakłada, że pliki *.nbml znajdują się w folderze library oraz, że po kompilacji będą one umieszczane
-w folderze tmp. Autoloader jest ustawiony w ten sposób, że niezależnie od tego czy plik był zmieniony czy nie będzie
+<p>Powyższy skrypt zakłada, że pliki *.nbml znajdują się w folderze library, oraz że po kompilacji będą one umieszczane
+w folderze tmp. Autoloader jest ustawiony w ten sposób, że niezależnie od tego czy plik był zmieniony czy nie, będzie
 on kompilowany każdorazowo przy wywołaniu autoloadera. Jest to bardzo czasochłonne i w środowisku stabilnym należy
-ją wyłączyć. Gdy opcja setAlwaysCompile zostanie ustawiona na false kompilator będzie uruchamiany <strong>tylko</strong> w przypadku
+to wyłączyć. Gdy opcja setAlwaysCompile zostanie ustawiona na false, kompilator będzie uruchamiany <strong>tylko</strong> w przypadku
 gdy czas ostatniej zmiany pliku *.nbml jest większy od czasu ostatniej zmiany wygenerowanego pliku *.php</p>
 
 <p>Następnie pozostaje nam utworzenie instancji kompilatora i dodanie jej do autoloadera.</p>
@@ -113,13 +113,13 @@ $viewAutoLoader-&gt;setViewCompiler($viewCompiler);
 
 <p>Operacja ta jest odseparowana od ViewAutoLoader w celu większej customizacji - możesz utworzyć własny kompilator,
 czy rozszerzyć istneiejący wedle uznania.
-Dołanczase są standardowe metadata tagi <a href="#metadata-tags">metadata-tags</a>. W tym miejscu możesz załączyć własne lub wyłączyć
-nie używane w celu poprawy czytelności kodu.</p>
+Dołączane są standardowe metadata tagi <a href="#metadata-tags">metadata-tags</a>. W tym miejscu możesz załączyć własne, lub wyłączyć
+nieużywane w celu poprawy czytelności kodu.</p>
 
 <h3 id="instantiation-composer">Composer (polecana metoda)</h3>
 
-<p>Nbml może być znaleziony również w packagist co sprawia korzystanie z composera o wiele prostrzym.
-Zaprazentuję w jaki sposó możemy skorzystać z composera do założenia nowego projektu.</p>
+<p>Nbml może być znaleziony również w packagist co czyni korzystanie z composera o wiele prostszym.
+Zaprezentuję w jaki sposób możemy skorzystać z composera do założenia nowego projektu.</p>
 
 <p>Załóżmy, że posiadamy taką strukturę katalogów / plików:</p>
 
@@ -154,11 +154,11 @@ Zaprazentuję w jaki sposó możemy skorzystać z composera do założenia noweg
 }
 </code></pre>
 
-<p>Gdzie MyNamespace jest twoją przestrzenią nazw - dowolnym łańcuchem znaków.
+<p>gdzie MyNamespace jest twoją przestrzenią nazw - dowolnym łańcuchem znaków.
 Zwróć uwagę na blok require: <code>&quot;finalclass/nbml&quot;:&quot;dev-master&quot;,</code> - zakładam tutaj użycie wersji developerskiej
-pakietu nbml. Nie jest to zalezane rozwiązanie. Wprowadź tutaj wersję najbardziej ci odpowiadającą.
-Gdy utworzymy i zapiszemu już ten plik należy uruchomić skrypt composer.phar, będąc w katalogu
-z tworzonym projektem w ten sposób:</p>
+pakietu nbml. Nie jest to zalecane rozwiązanie - wprowadź tutaj wersję najbardziej ci odpowiadającą.
+Gdy utworzymy i zapiszemy ten plik, należy uruchomić skrypt composer.phar będąc w katalogu
+z tworzonym projektem, w ten sposób:</p>
 
 <pre><code>php composer.phar install
 </code></pre>
@@ -174,7 +174,7 @@ $autoLoader = include '../vendor/autoload.php';
 $viewAutoLoader = include '../src/init_view_auto_loader.php';
 </code></pre>
 
-<p>Jak widać jest tutaj zaincludowany plik autoloadera dołączony przez composer. Dzięki temu niema konieczności
+<p>Jak widać jest tutaj zaincludowany plik autoloadera dołączony przez composer. Dzięki temu nie ma konieczności
 tworzenia instancji ClassAutoLoader dostarczonej przez Nbml.
 W index.php jest również includowany plik init_view_auto_loader.php którego treść jest następująca:</p>
 
@@ -206,17 +206,17 @@ $viewAutoLoader-&gt;setViewCompiler($viewCompiler);
 return $viewAutoLoader;
 </code></pre>
 
-<p>Jest to identyczny plik jak w przypadku instalacji manualnej [instantiation-manual] z tym, że niema tutaj
+<p>Jest to identyczny plik jak w przypadku instalacji manualnej [instantiation-manual] z tym, że nie ma tutaj
 tworzenia instancji ClassAutoLoader.</p>
 
 <h1 id="how-does-it-work">Jak to działa?</h1>
 
-<p>Koncepcja jest dość prosta. Piszemy pliki *.nbml które to są interpretowane do plików *.php. Konkretnie to klas php.
-Pliki *.nbml są zwykłymi plikami html z przeplatanym php. Czyli standardowe pliki szablonów php (często rozszerzeniem
+<p>Koncepcja jest dość prosta. Piszemy pliki *.nbml które to są interpretowane do plików *.php. Konkretnie - do klas php.
+Pliki *.nbml są zwykłymi plikami html z przeplatanym php, czyli standardowymi plikami szablonów php (często rozszerzeniem
 takich plików jest *.phtml). Następnie tworzona jest z nich klasa.
-Schematycznie można to pokazać w ten sposób.</p>
+Schematycznie można to pokazać w ten sposób:</p>
 
-<p>Załóżmy, że mamy taki o to plik *.nbml:</p>
+<p>Załóżmy, że mamy taki oto plik *.nbml:</p>
 
 <p>&lt;?php /**
  * @var $this \Nbml\Component
@@ -231,7 +231,7 @@ Schematycznie można to pokazać w ten sposób.</p>
  $exampleComponent = new \MyNamespace\Example();
  echo $exampleComponent</p>
 
-<p>W momencie użycja klasy \MyNamespace\Example zostanie pobrany plik MyNamespace/Example/Example.nbml, skompilowany do klasy
+<p>W momencie użycia klasy \MyNamespace\Example zostanie pobrany plik MyNamespace/Example/Example.nbml, skompilowany do klasy
 \MyNamespace\Example oraz dołączony (require_once).</p>
 
 <p><strong>Schematycznie</strong> treść wygenerowanego pliku php będzie następująca:</p>
@@ -259,27 +259,27 @@ Example.php wygląda w rzeczywistości.</p>
 
 <h1 id="why-should-i-use-it">Dlaczego warto używać nbml?</h1>
 
-<p>Php jest językiem który sam w sobie jest systemem szablonów. Pisanie stron internetowych wykorzystując czysty
-html+js+css jest najlepszym rozwiązaniem. Problem polega na tym, że gdy odseparujesz widok od konktrolera w php
-to widoki nie są konkretne. To znaczy nie wiadomo jakie zmienne może dany szablon przyjmować.
-IDE nie jest w stanie podpowiedzieć co można w danym szablonie wykonać. Koder nie wiem jakie zmienne
+<p>Php jest językiem, który sam w sobie jest systemem szablonów. Pisanie stron internetowych wykorzystując czysty
+html+js+css jest najlepszym rozwiązaniem. Problem polega na tym że gdy odseparujesz widok od kontrolera w php
+to widoki nie są konkretne, to znaczy nie wiadomo jakie zmienne może dany szablon przyjmować.
+IDE nie jest w stanie podpowiedzieć, co można w danym szablonie wykonać. Koder nie wie, jakie zmienne
 programista zostawił mu do dyspozycji.</p>
 
 <p>Z pomocą przychodzi nbml. Dzięki niemu dalej tworzymy szablony w html+php jednak tym razem kontrakt pomiędzy
-koderem a programistą jest jasny. Koder wie co ma do dyspozycji w danymi widoku a programista jest szczęśliwy bo
-ma obiekt:) Nikt nie pomyli się w nazewnictwie zmiennych gdyż IDE bez problemu parsuje wygenerowane klasy
-i podpowieada dostępne opcję jak i typy zmiennych.</p>
+koderem a programistą jest jasny. Koder wie co ma do dyspozycji w danymi widoku, a programista jest szczęśliwy bo
+ma obiekt:) Nikt nie pomyli się w nazewnictwie zmiennych, gdyż IDE bez problemu parsuje wygenerowane klasy
+i podpowiada dostępne opcje jak i typy zmiennych.</p>
 
 <p>Dzięki temu rozwiązaniu posiadasz w pełni <strong>obiektowy widok</strong>. Tworzysz drzewo lekkich komponentów. Tworzysz je jednak
 w htmlu - skinownanie jest załatwione.</p>
 
-<p>To rozwiązanie jest kompletnie nieinwazyjne i można bez szadnych przeciwskazań korzystać z nbmla równolegle
+<p>To rozwiązanie jest kompletnie nieinwazyjne i można bez żadnych przeciwwskazań korzystać z nbmla, równolegle
 z innymi bibliotekami.</p>
 
 <h1 id="hello-world-example">Hello World example</h1>
 
-<p>Jak to zostało przyjęte, pierwszym krokiem w nowym języku powinno byćutworzenie programu Hello World:)
-nbml oczywiście stanał na wysokości zadania i takowy program wam prezentuje.</p>
+<p>Jak to zostało przyjęte, pierwszym krokiem w nowym języku powinno być utworzenie programu Hello World:)
+nbml oczywiście stanął na wysokości zadania i takowy program wam prezentuje.</p>
 
 <p>Zakładam taką strukturę katalogów:</p>
 

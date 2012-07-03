@@ -69,7 +69,7 @@ class VariableBuilder
         $this->classReflection = $classReflection;
         $this->className = $classReflection->getClassName();
         foreach ($this->reflection->getMetadataTags() as $tag) {
-            $this->metadataTags[$tag->getTagName()] = $this->createTagProcessor($tag);
+            $this->metadataTags[] = $this->createTagProcessor($tag);
         }
     }
 
@@ -92,12 +92,11 @@ class VariableBuilder
     {
         $tag = $this->getTagByHasFunction('hasInitializationCode');
         if (!$tag) {
-
             if ($this->reflection->isSimpleType()) {
                 //@TODO initialization for simple types
                 return '';
             } else {
-                if($this->getReflection()->getName() == 'this') {
+                if ($this->getReflection()->getName() == 'this') {
                     return '';
                 }
                 return '$this->options[\'' . $this->reflection->getNameUnderscored() . '\']'
@@ -105,10 +104,13 @@ class VariableBuilder
                         . '(' . $this->reflection->getDefaultValue() . ');'
                         . PHP_EOL;
             }
-
         }
 
-        return $tag->getInitializationCode();
+        $out = '';
+        foreach ($this->metadataTags as $tag) {
+            $out .= $tag->getInitializationCode();
+        }
+        return $out;
     }
 
     public function getGetter()
@@ -176,7 +178,7 @@ class VariableBuilder
     {
         $tag = $this->getTagByHasFunction('hasBeforeRenderRetrievalCode');
         if (!$tag) {
-            if($this->getReflection()->getName() == 'this') {
+            if ($this->getReflection()->getName() == 'this') {
                 return '';
             }
 
