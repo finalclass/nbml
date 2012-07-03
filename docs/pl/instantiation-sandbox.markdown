@@ -1,4 +1,4 @@
-## Sandbox [instantiation-sandbox]
+# Tworzenie instancji z wykorzystaniem sandbox [instantiation-sandbox]
 
 Jest to najprostsza i zarazem najmniej elastyczna forma zainicjalizowania nbmla.
 

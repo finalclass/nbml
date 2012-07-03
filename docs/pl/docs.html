@@ -16,14 +16,18 @@ Należy również zainicjalizować jakiś autoloader do klas biblioteki nbml, po
  sposobu ładowania klas, ta czynność jest pozostawiona programiście. Przejdźmy najpierw jednak do prostszego
  wariantu - rozpoczęcia pracy z wykorzystaniem pliku sandbox <a href="#instantiation-sandbox">instantiation-sandbox</a>.</p>
 
-<h3 id="instantiation-sandbox">Sandbox</h3>
+<h2 id="instantiation-sandbox">Tworzenie instancji z wykorzystaniem sandbox</h2>
 
 <p>Jest to najprostsza i zarazem najmniej elastyczna forma zainicjalizowania nbmla.</p>
 
 <pre><code>$viewAutoLoader = include 'library/Nbml/sandbox_runtime.php';
 </code></pre>
 
-<h3 id="instatiation-manual">Manual</h3>
+<h2 id="instatiation-manual">Tworzenie instancji metodą manualną</h2>
+
+<p>Możemy oczywiście zainicjalizować interpreter ręcznie. Dzięki temu możemy w pełni
+skorzystać z opcji konfiguracyjnych jakie dostarcza nam interpreter.
+Poniżej znajduje się przykładowa konfiguracja manualna.</p>
 
 <p><strong>plik index.php</strong></p>
 
@@ -116,7 +120,7 @@ czy rozszerzyć istneiejący wedle uznania.
 Dołączane są standardowe metadata tagi <a href="#metadata-tags">metadata-tags</a>. W tym miejscu możesz załączyć własne, lub wyłączyć
 nieużywane w celu poprawy czytelności kodu.</p>
 
-<h3 id="instantiation-composer">Composer (polecana metoda)</h3>
+<h2 id="instantiation-composer">Tworzenie instancji z wykorzystaniem Composer (zalecana metoda)</h2>
 
 <p>Nbml może być znaleziony również w packagist co czyni korzystanie z composera o wiele prostszym.
 Zaprezentuję w jaki sposób możemy skorzystać z composera do założenia nowego projektu.</p>
@@ -218,18 +222,20 @@ Schematycznie można to pokazać w ten sposób:</p>
 
 <p>Załóżmy, że mamy taki oto plik *.nbml:</p>
 
-<p>&lt;?php /**
+<pre><code>&lt;?php /**
  * @var $this \Nbml\Component
  */ ?&gt;
- Example component</p>
+ Example component
+</code></pre>
 
 <p>Umieśćmy go w folderze MyNamespace\Example i nazwijmy Example.nbml (plik będzie tutaj: /MyNamespace/Example/Example.nbml)</p>
 
 <p>Teraz gdzieś w pliku *.php wykonajmy następujące polecenie:</p>
 
-<p>&lt;?php
- $exampleComponent = new \MyNamespace\Example();
- echo $exampleComponent</p>
+<pre><code>&lt;?php
+$exampleComponent = new \MyNamespace\Example();
+echo $exampleComponent
+</code></pre>
 
 <p>W momencie użycia klasy \MyNamespace\Example zostanie pobrany plik MyNamespace/Example/Example.nbml, skompilowany do klasy
 \MyNamespace\Example oraz dołączony (require_once).</p>
@@ -383,14 +389,16 @@ class HelloWorld extends \Nbml\Component\Application
 
 <h1 id="metadata-tags">Metadata Tags</h1>
 
-<h3 id="metadata-tags-public">Metadata Tags - Public</h3>
+<h2 id="metadata-tags-public">Metadata Tags - Public</h2>
 
-<h3 id="metadata-tags-state">Metadata Tags - State</h3>
+<h2 id="metadata-tags-state">Metadata Tags - State</h2>
 
-<h3 id="metadata-tags-on-state">Metadata Tags - OnState</h3>
+<h2 id="metadata-tags-on-state">Metadata Tags - OnState</h2>
 
-<h3 id="metadata-tags-on-demand">Metadata Tags - OnDemand</h3>
+<h2 id="metadata-tags-on-demand">Metadata Tags - OnDemand</h2>
 
-<h3 id="metadata-tags-css">Metadata Tags - Css</h3>
+<h2 id="metadata-tags-css">Metadata Tags - Css</h2>
 
-<h3 id="metadata-tags-js">Metadata Tags - Js</h3>
+<h2 id="metadata-tags-js">Metadata Tags - Js</h2>
+
+<h1 id="custom-metadata-tags">Własne Metadata tagi</h1>

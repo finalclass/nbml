@@ -1,4 +1,8 @@
-## Manual [instatiation-manual]
+# Tworzenie instancji metodą manualną [instatiation-manual]
+
+Możemy oczywiście zainicjalizować interpreter ręcznie. Dzięki temu możemy w pełni
+skorzystać z opcji konfiguracyjnych jakie dostarcza nam interpreter.
+Poniżej znajduje się przykładowa konfiguracja manualna.
 
 **plik index.php**
 

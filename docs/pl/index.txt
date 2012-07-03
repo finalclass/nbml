@@ -21,3 +21,4 @@ metadata-tags.markdown
 	metadata-tags-on-demand.markdown
 	metadata-tags-css.markdown
 	metadata-tags-js.markdown
+custom-metadata-tags.markdown

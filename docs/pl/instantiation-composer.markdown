@@ -1,4 +1,4 @@
-## Composer (polecana metoda) [instantiation-composer]
+# Tworzenie instancji z wykorzystaniem Composer (zalecana metoda) [instantiation-composer]
 
 Nbml może być znaleziony również w packagist co czyni korzystanie z composera o wiele prostszym.
 Zaprezentuję w jaki sposób możemy skorzystać z composera do założenia nowego projektu.

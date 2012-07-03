@@ -1,1 +1,1 @@
-## Metadata Tags - Js [metadata-tags-js]
+# Metadata Tags - Js [metadata-tags-js]

@@ -7,18 +7,18 @@ Schematycznie można to pokazać w ten sposób:
 
 Załóżmy, że mamy taki oto plik *.nbml:
 
-  <?php /**
-   * @var $this \Nbml\Component
-   */ ?>
-   Example component
+	<?php /**
+	 * @var $this \Nbml\Component
+	 */ ?>
+	 Example component
 
 Umieśćmy go w folderze MyNamespace\Example i nazwijmy Example.nbml (plik będzie tutaj: /MyNamespace/Example/Example.nbml)
 
 Teraz gdzieś w pliku *.php wykonajmy następujące polecenie:
 
-  <?php
-  $exampleComponent = new \MyNamespace\Example();
-  echo $exampleComponent
+	<?php
+	$exampleComponent = new \MyNamespace\Example();
+	echo $exampleComponent
 
 W momencie użycia klasy \MyNamespace\Example zostanie pobrany plik MyNamespace/Example/Example.nbml, skompilowany do klasy
 \MyNamespace\Example oraz dołączony (require_once).

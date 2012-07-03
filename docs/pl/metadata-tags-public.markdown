@@ -1,1 +1,1 @@
-## Metadata Tags - Public [metadata-tags-public]
+# Metadata Tags - Public [metadata-tags-public]
