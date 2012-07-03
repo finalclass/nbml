@@ -64,6 +64,7 @@ class ClassBuilder
                         $this->tagProcessors
                         );
         }
+
         $thisVar = $this->reflection->getThisVariable();
         $this->variableBuilders['this'] = new VariableBuilder(
             $thisVar,
