@@ -7,6 +7,5 @@
 		"psr-0":{
 			"Nbml":"library/"
 		}
-	},
-	"version": "1.0.0"
+	}
 }
