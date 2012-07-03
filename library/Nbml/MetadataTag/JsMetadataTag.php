@@ -52,7 +52,8 @@ class JsMetadataTag extends AbstractMetadataTag
     public function getInitializationCode()
     {
         $js = trim($this->definition->getDefaultProperty());
-        if(isset($js[0]) && $js[0] != '/') {
+        $isRemote = substr($js, 0, 7) == 'http://' || substr($js, 0, 8) == 'https://';
+        if(isset($js[0]) && $js[0] != '/' && ! $isRemote) {
             $js = str_replace('\\', '/', $this->classReflection->getFullClassName())
                     . '/' . $js;
         }

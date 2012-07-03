@@ -52,7 +52,8 @@ class CssMetadataTag extends AbstractMetadataTag
     public function getInitializationCode()
     {
         $css = trim($this->definition->getDefaultProperty());
-        if(isset($css[0]) && $css[0] != '/') {
+        $isRemote = substr($css, 0, 7) == 'http://' || substr($css, 0, 8) == 'https://';
+        if(isset($css[0]) && $css[0] != '/' && ! $isRemote) {
             $css = str_replace('\\', '/', $this->classReflection->getFullClassName())
                     . '/' . $css;
         }
