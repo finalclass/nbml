@@ -1,7 +1,7 @@
 # Metadata Tags - State [metadata-tags-state]
 
-Metadata tag \[State\] powoduje dodanie stanu do danego komponentu. Zmienne zdefiniowane jako
-\[State\] powinny być typu boolean.
+Metadata tag [\[State\]][metadata-tags-state] powoduje dodanie stanu do danego komponentu. Zmienne zdefiniowane jako
+[\[State\]][metadata-tags-state] powinny być typu boolean.
 Włączenie jednego stanu powoduje wyłączenie innych.
 
 Rozpatrzmy poniższy przykładowy komponent przycisku:
@@ -30,4 +30,5 @@ a następnie jego użycie:
 	echo $button;
 
 ustawienie zmiennej selectedState na true powoduje ustawienie innych zmiennych stanowych na false.
-Często korzysta się z metatagu \[State\] we współpracy z metatagiem [\[OnState\]][metadata-tags-on-state]
+Często korzysta się z metatagu [\[State\]][metadata-tags-state]
+we współpracy z metatagiem [\[OnState\]][metadata-tags-on-state]

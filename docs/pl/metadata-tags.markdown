@@ -7,7 +7,8 @@ Nbml wykorzystuje phpdoc do definiowania obiektów. Przykładowo taka konstrukcj
 	 * @var $message string
 	 */ ?>
 
-utworzy klasę dziedziczącą po \Nbml\Component z prywatną zmienną $message o typie string. W ten sposób możemy definiować pewne aspekty budowanego komponentu.
+utworzy klasę dziedziczącą po `\Nbml\Component` z prywatną zmienną $message o typie `string`.
+W ten sposób możemy definiować pewne aspekty budowanego komponentu.
 Nbml posiada również mechanizm definiowania własnych tagów, które to zmieniają właściwości definiowanej zmiennej.
 W bibliotece standardowej mamy do dyspozycji następujące tagi: [\[Public\]][metadata-tags-public],
 [\[State\]][metadata-tags-state], [\[OnState\]][metadata-tags-on-state],
@@ -16,7 +17,7 @@ W bibliotece standardowej mamy do dyspozycji następujące tagi: [\[Public\]][me
 ### Atrybuty Metadata tagów
 
 Metadata tagi mogą przyjmować pewne atrybuty. Jeżeli dany Metatag przyjmuje atrybuty może
-on również mieć zdefiniowany atrybut domyślny. Dla przykładu atrybut `\[OnState\]` może być parametryzowany
+on również mieć zdefiniowany atrybut domyślny. Dla przykładu atrybut [\[State\]][metadata-tags-state] może być parametryzowany
 przez atrybut `name` który to jest atrybutem domyślnym. Zatem zapis:
 
 	* [OnState(name='selected')]

@@ -1,8 +1,15 @@
 # Metadata Tags - OnState [metadata-tags-on-state]
 
-Ustawienie na pewnym komponencie metatagu \[OnState\] powoduje ustawienie warunku na danej zmiennej.
+Ustawienie na pewnym komponencie metatagu [\[OnState\]][metadata-tags-on-state]
+powoduje ustawienie warunku na danej zmiennej.
 **Zmienna zostanie zainicjalizowana tylko w przypadku gdy komponent znajdujować się będzie w zadanym stanie.**
 W przeciwnym wypadku jej wartość będzie pustym łańcuchem znaków.
+
+Metadata tag [\[OnState\]][metadata-tags-on-state]
+przyjmuje jeden argument `name` określający nazwę stanu w którym dana
+zmienna ma się zainicjalizować. Argument `name` jest argumentem domyślnym więc nie
+ma konieczności pisać `[OnState(name='stateName')]`, można skorzystać ze skórconej
+formy: `[OnState('stateName')]`.
 
 Rozpatrzmy przypadek przycisku:
 
@@ -25,7 +32,7 @@ Rozpatrzmy przypadek przycisku:
 Powyższy przycisk będzie miał klasę `selected` **tylko** w przypadku gdy komponent Button będzie
 w stanie selectedState.
 
-Tę właściwość można łatwo połączyć z właściwością [\[Public\]\[metadata-tags-public] i stworzyć
+Tę właściwość można łatwo połączyć z właściwością [\[Public\]][metadata-tags-public] i stworzyć
 customizowalny przycisk w ten sposób:
 
 	<?php /**

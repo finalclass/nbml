@@ -44,7 +44,7 @@ class Component
         try {
             $this->__invoke();
         } catch(\Exception $e) {
-            echo $e->getMessage();
+            trigger_error((string)$e);
         }
         return $this->text;
     }
