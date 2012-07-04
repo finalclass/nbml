@@ -1,0 +1,841 @@
+<h1 id="welcome">NetBricks Markup Language</h1>
+
+<p>Nbml jest językiem służącym do definiowania widoków w sposób obiektowy. Za jego pomocą w łatwy sposób możemy przekształcić widok w formacie phtml (html ze wstawkami w języku php), do klas php.</p>
+
+<p>Szymon Wygnański</p>
+
+<h1 id="system-requirements">Wymagania systemowe</h1>
+
+<p>Biblioteka nbml wymaga PHP w wersji minimum 5.3</p>
+
+<h1 id="instantiation">Tworzenie instancji</h1>
+
+<p>Aby rozpocząć pracę z plikami nbml należy zainicjalizować ViewAutoLoader. Klasa ta rejestruje php autoloader
+tak, aby obsługiwał plik *.nbml. Można to zrobić korzystając z dostarczonego sandboxa lub manualnie.
+Należy również zainicjalizować jakiś autoloader do klas biblioteki nbml, ponieważ nbml korzysta ze standardowego
+ sposobu ładowania klas, ta czynność jest pozostawiona programiście. Przejdźmy najpierw jednak do prostszego
+ wariantu - rozpoczęcia pracy z wykorzystaniem pliku sandbox <a href="#instantiation-sandbox">instantiation-sandbox</a>.</p>
+
+<h2 id="instantiation-sandbox">Tworzenie instancji z wykorzystaniem sandbox</h2>
+
+<p>Jest to najprostsza i zarazem najmniej elastyczna forma zainicjalizowania nbmla.</p>
+
+<pre><code>$viewAutoLoader = include 'library/Nbml/sandbox_runtime.php';
+</code></pre>
+
+<h2 id="instatiation-manual">Tworzenie instancji metodą manualną</h2>
+
+<p>Możemy oczywiście zainicjalizować interpreter ręcznie. Dzięki temu możemy w pełni
+skorzystać z opcji konfiguracyjnych jakie dostarcza nam interpreter.
+Poniżej znajduje się przykładowa konfiguracja manualna.</p>
+
+<p><strong>plik index.php</strong></p>
+
+<pre><code>&lt;?php
+
+use \Nbml\AutoLoader\ClassAutoLoader;
+use \Nbml\AutoLoader\ViewAutoLoader;
+use \Nbml\Compiler;
+
+require_once __DIR__ . '/AutoLoader/ViewAutoLoader.php';
+require_once __DIR__ . '/AutoLoader/ClassAutoLoader.php';
+
+$classAutoLoader = new ClassAutoLoader();
+$classAutoLoader
+                -&gt;addIncludePath(__DIR__ . '/../library')
+                -&gt;register();
+
+$viewAutoLoader = new ViewAutoLoader();
+$viewAutoLoader
+                -&gt;setCompilerDefaultDestinationDir(__DIR__ . '/../tmp')
+                -&gt;setAlwaysCompile(true)
+                -&gt;addIncludePath(__DIR__ . '/../library')
+                -&gt;register();
+
+$viewCompiler = new Compiler();
+$viewCompiler
+      -&gt;addTagProcessor('\Nbml\MetadataTag\PublicMetadataTag')
+      -&gt;addTagProcessor('\Nbml\MetadataTag\StateMetadataTag')
+      -&gt;addTagProcessor('\Nbml\MetadataTag\OnDemandMetadataTag')
+      -&gt;addTagProcessor('\Nbml\MetadataTag\OnStateMetadataTag')
+      -&gt;addTagProcessor('\Nbml\MetadataTag\CssMetadataTag')
+      -&gt;addTagProcessor('\Nbml\MetadataTag\JsMetadataTag');
+
+$viewAutoLoader-&gt;setViewCompiler($viewCompiler);
+</code></pre>
+
+<p>Instalacja zakłada, że posiadasz taką strukturę katalogów:</p>
+
+<ul>
+<li><p>public</p>
+
+<ul>
+<li>index.php</li>
+</ul></li>
+<li><p>library</p>
+
+<ul>
+<li>Nbml</li>
+</ul></li>
+<li><p>tmp</p></li>
+</ul>
+
+<p>A teraz po kolei. Załączami pliki klas Autoloaderów (ViewAutoLoader oraz ClassAutoLoader).
+Następnie należy zainicjalizować ClassAutoLoader w celu poprawnego ładowania klas kompilatora Nbml.</p>
+
+<pre><code>$classAutoLoader = new ClassAutoLoader();
+$classAutoLoader
+        -&gt;addIncludePath(__DIR__ . '/../library')
+        -&gt;register();
+</code></pre>
+
+<p>Teraz możemy bez obaw inicjalizować autoloader do klas *.nbml</p>
+
+<pre><code>$viewAutoLoader = new ViewAutoLoader();
+$viewAutoLoader
+        -&gt;setCompilerDefaultDestinationDir(__DIR__ . '/../tmp')
+        -&gt;setAlwaysCompile(true)
+        -&gt;addIncludePath(__DIR__ . '/../library')
+        -&gt;register();
+</code></pre>
+
+<p>Powyższy skrypt zakłada, że pliki *.nbml znajdują się w folderze library, oraz że po kompilacji będą one umieszczane
+w folderze tmp. Autoloader jest ustawiony w ten sposób, że niezależnie od tego czy plik był zmieniony czy nie, będzie
+on kompilowany każdorazowo przy wywołaniu autoloadera. Jest to bardzo czasochłonne i w środowisku stabilnym należy
+to wyłączyć. Gdy opcja setAlwaysCompile zostanie ustawiona na false, kompilator będzie uruchamiany <strong>tylko</strong> w przypadku
+gdy czas ostatniej zmiany pliku *.nbml jest większy od czasu ostatniej zmiany wygenerowanego pliku *.php</p>
+
+<p>Następnie pozostaje nam utworzenie instancji kompilatora i dodanie jej do autoloadera.</p>
+
+<pre><code>$viewCompiler = new Compiler();
+$viewCompiler
+    -&gt;addTagProcessor('\Nbml\MetadataTag\PublicMetadataTag')
+    -&gt;addTagProcessor('\Nbml\MetadataTag\StateMetadataTag')
+    ...
+$viewAutoLoader-&gt;setViewCompiler($viewCompiler);
+</code></pre>
+
+<p>Operacja ta jest odseparowana od ViewAutoLoader w celu większej customizacji - możesz utworzyć własny kompilator,
+czy rozszerzyć istneiejący wedle uznania.
+Dołączane są standardowe metadata tagi <a href="#metadata-tags">metadata-tags</a>. W tym miejscu możesz załączyć własne, lub wyłączyć
+nieużywane w celu poprawy czytelności kodu.</p>
+
+<h2 id="instantiation-composer">Tworzenie instancji z wykorzystaniem Composer (zalecana metoda)</h2>
+
+<p>Nbml może być znaleziony również w packagist co czyni korzystanie z composera o wiele prostszym.
+Zaprezentuję w jaki sposób możemy skorzystać z composera do założenia nowego projektu.</p>
+
+<p>Załóżmy, że posiadamy taką strukturę katalogów / plików:</p>
+
+<ul>
+<li><p>public</p>
+
+<ul>
+<li>index.php</li>
+</ul></li>
+<li><p>src</p>
+
+<ul>
+<li>MyNamespace</li>
+</ul></li>
+<li><p>tmp</p></li>
+<li><p>composer.json</p></li>
+<li><p>composer.phar</p></li>
+</ul>
+
+<p>Treść naszego pliku <strong>composer.json</strong> powinna wyglądać następująco:</p>
+
+<pre><code>{
+    &quot;require&quot;:{
+        &quot;php&quot;:&quot;&gt;=5.3.0&quot;,
+        &quot;finalclass/nbml&quot;:&quot;dev-master&quot;,
+    },
+    &quot;autoload&quot;:{
+        &quot;psr-0&quot;:{
+            &quot;MyNamespace&quot;: &quot;src/&quot;
+        }
+    }
+}
+</code></pre>
+
+<p>gdzie MyNamespace jest twoją przestrzenią nazw - dowolnym łańcuchem znaków.
+Zwróć uwagę na blok require: <code>&quot;finalclass/nbml&quot;:&quot;dev-master&quot;,</code> - zakładam tutaj użycie wersji developerskiej
+pakietu nbml. Nie jest to zalecane rozwiązanie - wprowadź tutaj wersję najbardziej ci odpowiadającą.
+Gdy utworzymy i zapiszemy ten plik, należy uruchomić skrypt composer.phar będąc w katalogu
+z tworzonym projektem, w ten sposób:</p>
+
+<pre><code>php composer.phar install
+</code></pre>
+
+<p>Skrypt ten utworzy folder vendor oraz zapełni go zależnościami.
+W tym momencie należy zainicjalizować ViewAutoLoader.</p>
+
+<p>Treść pliku <strong>index.php</strong></p>
+
+<pre><code>use \NbmlHome\View\Layout;
+
+$autoLoader = include '../vendor/autoload.php';
+$viewAutoLoader = include '../src/init_view_auto_loader.php';
+</code></pre>
+
+<p>Jak widać jest tutaj zaincludowany plik autoloadera dołączony przez composer. Dzięki temu nie ma konieczności
+tworzenia instancji ClassAutoLoader dostarczonej przez Nbml.
+W index.php jest również includowany plik init_view_auto_loader.php którego treść jest następująca:</p>
+
+<p>Treść pliku <strong>/src/init_view_auto_loader.php</strong></p>
+
+<pre><code>&lt;?php
+
+use \Nbml\AutoLoader\ViewAutoLoader;
+use \Nbml\Compiler;
+
+$viewAutoLoader = new ViewAutoLoader();
+$viewAutoLoader
+            -&gt;setCompilerDefaultDestinationDir(__DIR__ . '/../tmp')
+            -&gt;setAlwaysCompile(true)
+            -&gt;addIncludePath(__DIR__ . '/../src')
+            -&gt;register();
+
+$viewCompiler = new Compiler();
+$viewCompiler
+            -&gt;addTagProcessor('\Nbml\MetadataTag\PublicMetadataTag')
+            -&gt;addTagProcessor('\Nbml\MetadataTag\StateMetadataTag')
+            -&gt;addTagProcessor('\Nbml\MetadataTag\OnDemandMetadataTag')
+            -&gt;addTagProcessor('\Nbml\MetadataTag\OnStateMetadataTag')
+            -&gt;addTagProcessor('\Nbml\MetadataTag\CssMetadataTag')
+            -&gt;addTagProcessor('\Nbml\MetadataTag\JsMetadataTag');
+
+$viewAutoLoader-&gt;setViewCompiler($viewCompiler);
+
+return $viewAutoLoader;
+</code></pre>
+
+<p>Jest to identyczny plik jak w przypadku instalacji manualnej [instantiation-manual] z tym, że nie ma tutaj
+tworzenia instancji ClassAutoLoader.</p>
+
+<h1 id="how-does-it-work">Jak to działa?</h1>
+
+<p>Koncepcja jest dość prosta. Piszemy pliki *.nbml które to są interpretowane do plików *.php. Konkretnie - do klas php.
+Pliki *.nbml są zwykłymi plikami html z przeplatanym php, czyli standardowymi plikami szablonów php (często rozszerzeniem
+takich plików jest *.phtml). Następnie tworzona jest z nich klasa.
+Schematycznie można to pokazać w ten sposób:</p>
+
+<p>Załóżmy, że mamy taki oto plik *.nbml:</p>
+
+<pre><code>&lt;?php /**
+ * @var $this \Nbml\Component
+ */ ?&gt;
+ Example component
+</code></pre>
+
+<p>Umieśćmy go w folderze MyNamespace\Example i nazwijmy Example.nbml (plik będzie tutaj: /MyNamespace/Example/Example.nbml)</p>
+
+<p>Teraz gdzieś w pliku *.php wykonajmy następujące polecenie:</p>
+
+<pre><code>&lt;?php
+$exampleComponent = new \MyNamespace\Example();
+echo $exampleComponent
+</code></pre>
+
+<p>W momencie użycia klasy \MyNamespace\Example zostanie pobrany plik MyNamespace/Example/Example.nbml, skompilowany do klasy
+\MyNamespace\Example oraz dołączony (require_once).</p>
+
+<p><strong>Schematycznie</strong> treść wygenerowanego pliku php będzie następująca:</p>
+
+<pre><code>&lt;?php
+namespace MyNamespace;
+class Example extends \Nbml\Component
+{
+
+  public function __toString()
+  {
+    ?&gt;
+    &lt;?php /**
+     * @var $this \Nbml\Component
+     */ ?&gt;
+     Example component
+
+ &lt;?php
+  }
+}
+</code></pre>
+
+<p>Oczywiście jest to tylko schemat działania, jeśli jesteś zainteresowany konkretną kompilacją, po prostu zobacz jak plik
+Example.php wygląda w rzeczywistości.</p>
+
+<h1 id="why-should-i-use-it">Dlaczego warto używać nbml?</h1>
+
+<p>Php jest językiem, który sam w sobie jest systemem szablonów. Pisanie stron internetowych wykorzystując czysty
+html+js+css jest najlepszym rozwiązaniem. Problem polega na tym że gdy odseparujesz widok od kontrolera w php
+to widoki nie są konkretne, to znaczy nie wiadomo jakie zmienne może dany szablon przyjmować.
+IDE nie jest w stanie podpowiedzieć, co można w danym szablonie wykonać. Koder nie wie, jakie zmienne
+programista zostawił mu do dyspozycji.</p>
+
+<p>Z pomocą przychodzi nbml. Dzięki niemu dalej tworzymy szablony w html+php jednak tym razem kontrakt pomiędzy
+koderem a programistą jest jasny. Koder wie co ma do dyspozycji w danymi widoku, a programista jest szczęśliwy bo
+ma obiekt:) Nikt nie pomyli się w nazewnictwie zmiennych, gdyż IDE bez problemu parsuje wygenerowane klasy
+i podpowiada dostępne opcje jak i typy zmiennych.</p>
+
+<p>Dzięki temu rozwiązaniu posiadasz w pełni <strong>obiektowy widok</strong>. Tworzysz drzewo lekkich komponentów. Tworzysz je jednak
+w htmlu - skinownanie jest załatwione.</p>
+
+<p>To rozwiązanie jest kompletnie nieinwazyjne i można bez żadnych przeciwwskazań korzystać z nbmla, równolegle
+z innymi bibliotekami.</p>
+
+<h1 id="hello-world-example">Hello World example</h1>
+
+<p>Jak to zostało przyjęte, pierwszym krokiem w nowym języku powinno być utworzenie programu Hello World:)
+nbml oczywiście stanął na wysokości zadania i takowy program wam prezentuje.</p>
+
+<p>Zakładam taką strukturę katalogów:</p>
+
+<ul>
+<li><p>library</p></li>
+<li><p>Nbml</p></li>
+<li><p>public</p>
+
+<ul>
+<li><p>HelloWorld</p>
+
+<ul>
+<li>HelloWorld.nbml</li>
+</ul></li>
+<li><p>index.php</p></li>
+</ul></li>
+</ul>
+
+<p>Skorzystamy z dostarczonego sandboxa w celu zainicjalizowania interpretera.</p>
+
+<p>plik <strong>index.php</strong></p>
+
+<pre><code>&lt;?php
+$viewAutoLoader = include '../library/Nbml/sandbox_runtime.php';
+echo new HelloWorld();
+</code></pre>
+
+<p>plik <strong>HelloWorld.nbml</strong></p>
+
+<pre><code>&lt;?php /**
+ * @var $this \Nbml\Component\Application
+ */ ?&gt;
+Hello World!
+</code></pre>
+
+<p>To wszystko co należy zakodować. Teraz postaje uruchomić skrypt.
+Twoim oczom ukaże się strona www o takim kodzie źródłowym:</p>
+
+<p><strong>wygenerowany html</strong></p>
+
+<pre><code>&lt;!DOCTYPE&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;meta charset=&quot;utf-8&quot;/&gt;
+    &lt;META http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+Hello World!
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>Zwróć uwagę, że w folderze HelloWorld został utworzony nowy plik: HelloWorld.php - jest to skompilowana wersja
+pliku HelloWorld.nbml. Oto treść tego pliku:</p>
+
+<p><strong>wygenerowany php</strong></p>
+
+<pre><code>&lt;?php
+
+class HelloWorld extends \Nbml\Component\Application
+{
+
+    static public $DIR = 'D:\Dokumenty\nbml\strona_projektu\www\vendor\finalclass\nbml\examples\hello_world\HelloWorld\HelloWorld.nbml';
+
+    /**
+     * @return \HelloWorld
+     */
+    static public function create()
+    {
+        return new \HelloWorld();
+    }
+
+    protected $options = array();
+
+    public function __construct($options = array())
+    {
+        parent::__construct($options);
+    }
+
+
+    /**
+     * @return \HelloWorld
+     */
+    public function __invoke()
+    {
+        ob_start();
+
+        ?&gt;&lt;?php /**
+     * @var $this \Nbml\Component\Application
+     */
+        ?&gt;
+
+    Hello World!
+    &lt;?php
+        $this-&gt;text = ob_get_clean();
+        return $this;
+    }
+}
+</code></pre>
+
+<h1 id="metadata-tags">Metadata Tags</h1>
+
+<p>Nbml wykorzystuje phpdoc do definiowania obiektów. Przykładowo taka konstrukcja:</p>
+
+<pre><code>&lt;?php /**
+ * @var $this \Nbml\Component
+ * @var $message string
+ */ ?&gt;
+</code></pre>
+
+<p>utworzy klasę dziedziczącą po <code>\Nbml\Component</code> z prywatną zmienną $message o typie <code>string</code>.
+W ten sposób możemy definiować pewne aspekty budowanego komponentu.
+Nbml posiada również mechanizm definiowania własnych tagów, które to zmieniają właściwości definiowanej zmiennej.
+W bibliotece standardowej mamy do dyspozycji następujące tagi: <a href="#metadata-tags-public">[Public]</a>,
+<a href="#metadata-tags-state">[State]</a>, <a href="#metadata-tags-on-state">[OnState]</a>,
+<a href="#metadata-tags-on-demand">[OnDemand]</a>, <a href="#metadata-tags-css">[Css]</a> oraz <a href="#metadata-tags-js">[Js]</a>.</p>
+
+<h3 id="atrybutymetadatatagw">Atrybuty Metadata tagów</h3>
+
+<p>Metadata tagi mogą przyjmować pewne atrybuty. Jeżeli dany Metatag przyjmuje atrybuty może
+on również mieć zdefiniowany atrybut domyślny. Dla przykładu atrybut <a href="#metadata-tags-state">[State]</a> może być parametryzowany
+przez atrybut <code>name</code> który to jest atrybutem domyślnym. Zatem zapis:</p>
+
+<pre><code>* [OnState(name='selected')]
+</code></pre>
+
+<p>jest równoznaczny z zapisem:</p>
+
+<pre><code>* [OnState('selected')]
+</code></pre>
+
+<p>W przypadku gdy metadata tag przyjmuje więcej atrybutów ich nazwy powinny być oddzielone przecinkami w ten sposób:</p>
+
+<pre><code>* [Tag(attr1='value1', attr2='value2', attr3='value3')]
+</code></pre>
+
+<p>Interpreter umożliwia również prostę tworzenie własnych Metadata tagów.
+Proces ten opisany jest w tym miejscu <a href="#custom-metadata-tags">Własne Metadata tagi</a></p>
+
+<h2 id="metadata-tags-public">Metadata Tags - Public</h2>
+
+<p>Rozpatrzmy poniższy przykład:</p>
+
+<p><strong>plik HelloWorld.nbml</strong></p>
+
+<pre><code>&lt;?php /**
+ * @var $this \Nbml\Component
+ *
+ * [Public] @var $message string('Hello World!')
+ */ ?&gt;
+ &lt;div class=&quot;center bold&quot;&gt;
+  &lt;?=$message?&gt;
+ &lt;/div&gt;
+</code></pre>
+
+<p>A następnie jego użycie:</p>
+
+<pre><code>&lt;?php
+$helloComponent = new HelloWorld();
+echo $helloWorld-&gt;message(); //Hello World!
+$helloComponent-&gt;message('Hello Internet!');
+echo $helloComponent-&gt;message(); //Hello Internet!
+echo $helloComponent; //&lt;div class..../&gt;
+</code></pre>
+
+<p>Użycie Metadata tagu [Public] powoduje utworzenie publicznego gettera oraz settera dla zmiennej
+prywatnej $message.</p>
+
+<h2 id="metadata-tags-state">Metadata Tags - State</h2>
+
+<p>Metadata tag <a href="#metadata-tags-state">[State]</a> powoduje dodanie stanu do danego komponentu. Zmienne zdefiniowane jako
+<a href="#metadata-tags-state">[State]</a> powinny być typu boolean.
+Włączenie jednego stanu powoduje wyłączenie innych.</p>
+
+<p>Rozpatrzmy poniższy przykładowy komponent przycisku:</p>
+
+<p><strong>Button.nbml</strong></p>
+
+<pre><code>&lt;?php /**
+ * @var $this \Nbml\Component
+ *
+ * [State] @var $normalState boolean(true)
+ * [State] @var $selectedState boolean(false)
+ */ ?&gt;
+
+ &lt;a href=&quot;/example&quot; label=&quot;Example&quot; class=&quot;&lt;?=$selectedState ? 'selected' : ''?&gt;&quot;&gt;
+ Example
+ &lt;/a&gt;
+</code></pre>
+
+<p>a następnie jego użycie:</p>
+
+<pre><code>&lt;?php
+
+$button = new Button();
+var_dump($button-&gt;normalState()); //true
+$button-&gt;selectedState(true);
+var_dump($button-&gt;normalState()); //false
+echo $button;
+</code></pre>
+
+<p>ustawienie zmiennej selectedState na true powoduje ustawienie innych zmiennych stanowych na false.
+Często korzysta się z metatagu <a href="#metadata-tags-state">[State]</a>
+we współpracy z metatagiem <a href="#metadata-tags-on-state">[OnState]</a></p>
+
+<h2 id="metadata-tags-on-state">Metadata Tags - OnState</h2>
+
+<p>Ustawienie na pewnym komponencie metatagu <a href="#metadata-tags-on-state">[OnState]</a>
+powoduje ustawienie warunku na danej zmiennej.
+<strong>Zmienna zostanie zainicjalizowana tylko w przypadku gdy komponent znajdujować się będzie w zadanym stanie.</strong>
+W przeciwnym wypadku jej wartość będzie pustym łańcuchem znaków.</p>
+
+<p>Metadata tag <a href="#metadata-tags-on-state">[OnState]</a>
+przyjmuje jeden argument <code>name</code> określający nazwę stanu w którym dana
+zmienna ma się zainicjalizować. Argument <code>name</code> jest argumentem domyślnym więc nie
+ma konieczności pisać <code>[OnState(name='stateName')]</code>, można skorzystać ze skórconej
+formy: <code>[OnState('stateName')]</code>.</p>
+
+<p>Rozpatrzmy przypadek przycisku:</p>
+
+<p><strong>Button.nbml</strong></p>
+
+<pre><code>&lt;?php /**
+ * @var $this \Nbml\Component
+ *
+ * [State] @var $normalState boolean(true)
+ * [State] @var $selectedState boolean(false)
+ *
+ * [OnState('selectedState')] @var $selectedClass string('selected')
+ */ ?&gt;
+ &lt;a href=&quot;/example&quot;
+    title=&quot;Example&quot;
+    class=&quot;&lt;?=$selectedClass?&gt;&quot;&gt;
+    Example
+</code></pre>
+
+<p></a></p>
+
+<p>Powyższy przycisk będzie miał klasę <code>selected</code> <strong>tylko</strong> w przypadku gdy komponent Button będzie
+w stanie selectedState.</p>
+
+<p>Tę właściwość można łatwo połączyć z właściwością <a href="#metadata-tags-public">[Public]</a> i stworzyć
+customizowalny przycisk w ten sposób:</p>
+
+<pre><code>&lt;?php /**
+ * @var $this \Nbml\Component
+ *
+ * [State] @var $normalState boolean(true)
+ * [State] @var $selectedState boolean(false)
+ *
+ * [OnState('selectedState')]
+ * [Public]
+ * @var $selectedClass string('selected')
+ *
+ * [Public] @var $href string('#')
+ * [Public] @var $label string
+ */ ?&gt;
+&lt;a href=&quot;&lt;?=$href?&gt;&quot;
+   title=&quot;&lt;?=$label?&gt;&quot;
+   class=&quot;&lt;?=$selectedClass?&gt;&quot;&gt;
+    &lt;?=$label?&gt;
+&lt;/a&gt;
+</code></pre>
+
+<p>W tym przypadku sami możemy określić jaka klasa powinna być użyta dla stanu <code>selectedState</code>.</p>
+
+<h2 id="metadata-tags-on-demand">Metadata Tags - OnDemand</h2>
+
+<p>Ten znacznik powoduje utworzenie w miejsce zadanej zmiennej obiektu
+<code>\Nbml\MetadataTag\OnDemandMetadataTag\OnDemandFactory</code>.
+Powyższa klasa tworzy zadaną zmienną w momencie jej użycia
+(w momencie wywołania metod: <code>__toString()</code>, <code>__invoke()</code>,
+<code>__call()</code>, <code>__set()</code> lub <code>__get()</code>)</p>
+
+<pre><code>&lt;?php /**
+ * @var $this \Nbml\Component
+ *
+ * [OnDemand]
+ * @var $subComponent \Nbml\Component
+ */ ?&gt;
+
+ &lt;div class=&quot;example&quot;&gt;
+  &lt;?php if(rand(0, 9) &gt; 4): ?&gt;
+    &lt;?=$subComponent?&gt;
+  &lt;?php endif; ?&gt;
+ &lt;/div&gt;
+</code></pre>
+
+<p>W powyższym przykładzie w miejsce $subComponent zostaje utworzona klasa OnDemandFactory
+a następnie (tylko gdy rand(0, 9) &gt; 4) OnDemandFactory w momencie __toString()
+tworzy obiekt klasy \Nbml\Component jak to było zadane w phpDoc.</p>
+
+<p>Powyższy przykład ma za cel zaprezentowanie koncepcji działania znacznika [OnDemand]
+jest on jednak bezużyteczny. [OnDemand] sprawdza się idealnie przy &#8220;ciężkich&#8221; komponentach
+których inicjalizacja wiąże się z dużym obciążeniem systemu.</p>
+
+<h2 id="metadata-tags-css">Metadata Tags - Css</h2>
+
+<p>Metadata tag <a href="#metadata-tags-css">[Css]</a> służy do ładowania plików css.
+Nbml dostarcza podstawową
+wersję komponentu który jest dokumentem html: <code>\Nbml\Component\Application</code>.
+Można tę wersję rozbudować według własnych potrzeb. Należy zwrócić uwagę, że
+nbml nie umożliwia ręcznego umieszczania plików css i js (można to zrobić jednak
+nie jest to wskazane). Zamiast tego zaleca się tworzenie głównego komponentu tak
+aby dziedziczył po <code>\Nbml\Component\Application</code>. Komponent Application posiada
+zmienną styleSheets która to jest typu <code>\Nbml\Collection</code>. Można do niej dodawać
+pliki styli na przykład w ten sposób:</p>
+
+<pre><code>\Nbml\Component\Application::getInstance()-&gt;styleSheets()-&gt;add('/css/styles.css')
+</code></pre>
+
+<p>Dokładnie taką operację wykonuje znacznik <a href="#metadata-tags-css">[Css]</a>. Jako, że <code>Application::getInstance()</code>
+zwraca zawsze ostatnio utworzoną instancję (za pomocą <code>new</code>) to w momencie
+tworzenia mamy właśnie do niej dostęp. W systemie nie powinna być tworzona
+kolejna instancja Application. Wysyłamy do klienta tylko jedną strone html!
+Oczywiście mogą się pojawić wyjątki (chociaż ciężko mi wymyśleć jakieś).
+W takim przypadku należy pamiętać o tym, że <code>Application::getInstance()</code>
+zwraca zawsze ostatnio utworzoną instancję.</p>
+
+<h3 id="atrybuty">Atrybuty</h3>
+
+<p>Znacznik <a href="#metadata-tags-css">[Css]</a> posiada jeden atrybut: file.
+Jest on atrybutem domyślnym, zatem konstrukcja <code>[Css(file=&quot;/css/styles.css&quot;)]</code>
+jest jednoznaczna z <code>[Css(&quot;/css/styles.css&quot;)]</code></p>
+
+<h3 id="ciekiwzgldne">Ścieżki względne</h3>
+
+<p>Znacznik <a href="#metadata-tags-css">[Css]</a> umożliwia wprowadzanie ścieżek względnych.
+Gdy, dla przykładu, tworzymy plik podając ścieżke względną do pliku css:</p>
+
+<p><strong>public/Example/MyComponent/MyComponent.nbml</strong></p>
+
+<pre><code>&lt;?php /**
+ * [Css('myComponent.css')]
+ * @var $this \Nbml\Component
+ */ ?&gt;
+Component content...
+</code></pre>
+
+<p>to ścieżka względna zostanie rozwinięta w ten sposób:
+<code>&lt;link href=&quot;/Example/MyComponent/myComponent.css&quot; .../&gt;</code></p>
+
+<p>Gdy zdefiniujemy ścieżkę jako ścieżkę bezwzględną: <code>[Css('/myComponent.css')]</code>
+to zostanie ona niezmieniona: <code>&lt;link href=&quot;/myComponent.css&quot; .../&gt;</code>.</p>
+
+<p>W przypadku pracyz plikami zdalnymi należy pamiętać o wstawieniu http lub https
+przy definiowaniu lokalizacji pliku css tak aby ścieżka nie została rozwinięta
+do ścieżki bezwzględnej - system musi wiedzieć, że chodzi o plik zdalny.
+Dla przykładu ścieżka tego typu: <code>[Css('example.com/file.css')]</code> użyta w powyższym
+komponencie zostanie rozwinięta do: <code>/Example/MyComponent/example.com/file.css.</code>
+Poprawną formą powinno być podanie <strong>http</strong> na początku w ten sposób:
+<code>[Css('http://example.com/file.css')]</code></p>
+
+<p>Ta sama zasada tyczy się znacznika <a href="#metadata-tags-js">[Js]</a></p>
+
+<h3 id="przypisanieznacznikadozmiennej">Przypisanie znacznika do zmiennej</h3>
+
+<p>Ten znacznik nie jest związany z zmienną do której jest przypisany jednak
+powinien być przypisany do jakiejś zmiennej.</p>
+
+<p>Poniżej znajduje się błędna konstrukcja:</p>
+
+<p><strong>Błędny plik!!!</strong></p>
+
+<pre><code>&lt;?php /**
+ * @var $this \Nbml\Component\Application
+ *
+ * [Css('/css/styles.css')]
+ */ ?&gt;
+ Component content...
+</code></pre>
+
+<p>Poprawnie ten komponent powinien być zbudowany w ten sposób:</p>
+
+<pre><code>&lt;?php /**
+ * [Css('/css/styles.css')]
+ * @var $this \Nbml\Component\Application
+ */ ?&gt;
+ Component content...
+</code></pre>
+
+<p>Czyli metadata tag <a href="#metadata-tags-css">[Css]</a> powinien być przypisany do jakiejś zmiennej.
+Najlepiej przypisać tego typu metadata tagi do zmiennej $this. Jest to metoda zalecana.
+Podobnie działa metadata tag <a href="#metadata-tags-js">[Js]</a>.</p>
+
+<h2 id="metadata-tags-js">Metadata Tags - Js</h2>
+
+<p>Działanie znacznika <a href="#metadata-tags-js">[Js]</a> jest identyczne z działaniem znacznika
+<a href="#metadata-tags-css">[Css]</a> z tą różnicą, że odpowiada on za dodawnie plików JavaScript.
+Powoduje on dodanie następującej linijki w konstruktorze komponentu:</p>
+
+<pre><code>\Nbml\Component\Application::getInstance()-&gt;scripts()-&gt;add('file.js');
+</code></pre>
+
+<h1 id="custom-metadata-tags">Własne Metadata tagi</h1>
+
+<p>Silnik nbml umożliwia definiowanie jakie metadata tagi mają być brane
+pod uwagę podczas interpretowania komponentów. Inicjalizując kompilator
+dokonujesz tego wyboru. Przejdź do sekcji <a href="#instantiation">Tworzenie instancji</a>
+aby zgłębić ten proces.</p>
+
+<p>Klasa <code>\Nbml\Compiler</code> posiada metodę <code>-&gt;addTagProcessor($className)</code>
+która to umożliwia dodawanie własnych znaczników. Przykładowo inicjalizacja
+Metadata tagów dołączonych z biblioteką standardową wygląda w ten sposób:</p>
+
+<pre><code>$viewCompiler = new Compiler();
+$viewCompiler
+      -&gt;addTagProcessor('\Nbml\MetadataTag\PublicMetadataTag')
+      -&gt;addTagProcessor('\Nbml\MetadataTag\StateMetadataTag')
+      -&gt;addTagProcessor('\Nbml\MetadataTag\OnDemandMetadataTag')
+      -&gt;addTagProcessor('\Nbml\MetadataTag\OnStateMetadataTag')
+      -&gt;addTagProcessor('\Nbml\MetadataTag\CssMetadataTag')
+      -&gt;addTagProcessor('\Nbml\MetadataTag\JsMetadataTag');
+</code></pre>
+
+<p>Aby stworzyć własny znacznik musisz stworzyć klasę implementującą interfejs
+<code>\Nbml\MetadataTag</code>:</p>
+
+<pre><code>namespace Nbml;
+use \Nbml\Reflector\Variable;
+use \Nbml\Reflector\MetadataTagDefinition;
+use \Nbml\Reflector;
+
+interface MetadataTag
+{
+    static function getMetadataTagName();
+    function __construct(Variable $variable, MetadataTagDefinition $definition, Reflector $classReflection);
+    function hasGetter();
+    function getGetterMethodDefinition();
+    function hasSetter();
+    function getSetterMethodDefinition();
+    function hasInitializationCode();
+    function getInitializationCode();
+    function hasBeforeRenderRetrievalCode();
+    function getBeforeRenderRetrieveCode();
+    function getRequiredProperties();
+    function hasDefaultProperty();
+    function getDefaultPropertyName();
+}
+</code></pre>
+
+<p>Z pomocą przychodzi klasa <code>\Nbml\MetadataTag\AbstractMetadataTag</code> która to implementuje
+większość metod interfejsu <code>\Nbml\MetadataTag</code>. Zaleca się rozszerzanie tej klasy
+w celu tworzenia nowych procesorów znaczników.</p>
+
+<h2 id="przykadowymetadatatag">Przykładowy Metadata tag</h2>
+
+<p>Załóżmy, że chcemy zbudować własny metadata tag <code>[Hello]</code> który to dodawał by do
+zmiennej do której jest przypisany łańcuch znaków: &#8220;Hello &#8221;. Oto treść tego znacznika:</p>
+
+<p>Treść takiego procesora metadata tagów była by następująca:</p>
+
+<pre><code>&lt;?php
+
+class HelloMetadataTag extends \Nbml\MetadataTag\AbstractMetadataTag
+{
+    static function getMetadataTagName()
+    {
+        return 'Hello';
+    }
+
+    public function getInitializationCode()
+    {
+        $nameUnderscored = $this-&gt;variable-&gt;getNameUnderscored();
+        $default = $this-&gt;variable-&gt;getDefaultValue();
+        return '$this-&gt;options[\'' . $nameUnderscored . '\'] = '
+            . '\'Hello \' . ' .  $default . ';';
+    }
+}
+</code></pre>
+
+<p>Aby można było go używać należy go dodać do kompilatora w ten sposób:</p>
+
+<pre><code>$viewCompiler-&gt;addTagProcessor('\HelloMetadataTag')
+</code></pre>
+
+<p>Od tej pory można już korzystać z metadata tagu <code>[Hello]</code></p>
+
+<p><strong>HelloComponent.nbml</strong></p>
+
+<pre><code>&lt;?php /**
+ * @var $this \Nbml\Component
+ *
+ * [Hello] @var $miwa string('Miwa')
+ */ ?&gt;
+
+ &lt;?=$miwa?&gt;
+</code></pre>
+
+<p>Wywołanie tego komponentu:</p>
+
+<pre><code>&lt;?php
+echo new HelloComponent(); //Hello Miwa
+</code></pre>
+
+<p>Pisząc komponenty mamy dostęp dozmiennej <code>$this-&gt;variable</code> oraz <code>$this-&gt;definition</code>.
+Zmienna <code>$this-&gt;variable</code> jest typu <code>\Nbml\Reflector\Variable</code> i jest w niej pełen opis
+zmiennej do kórej dany metadata tag jest przypisany.</p>
+
+<p>Natomiast zmienna <code>$this-&gt;definition</code>
+jest definicją danego metadata tagu (w tym przypadku definicją meta tagu Hello).
+Jest ona typu: \Nbml\Reflector\MetadataTagDefinition. W tym obiekcie znajdziemy
+wszystkie dane o atrybutach (i ich wartościach) danego metadata tagu</p>
+
+<p>Czasem budując pewien metadata tag może powstać konieczność ingerencji w całą
+budowaną klasę komponentu. Z pomocą przychodzi nam właściwość <code>$this-&gt;classReflection</code>
+która to jest typu <code>\Nbml\Reflector</code>.</p>
+
+<p>Zwróć jeszcze uwagę na tę linię budowanego metadata tagu <code>[Hello]</code>:</p>
+
+<pre><code>return '$this-&gt;options[\'' . $nameUnderscored . '\'] = '
+            . '\'Hello \' . ' .  $default . ';';
+</code></pre>
+
+<p>Możesz się zastanawiać skąd wiadomo w jaki sposób taką linię napisać? Otóż to zależy
+od ciebie. Od ciebie zależy po czym twoje komponenty będą dziedziczyć.
+Domyślnie jest to klasa <code>\Nbml\Component</code>, jej znajomośc jest tutaj kluczowa.
+Rzućmy okiem na jej treść:</p>
+
+<pre><code>namespace Nbml;
+
+class Component
+{
+    protected $text = '';
+    protected $options = array();
+    public function __construct($options = array())
+    {
+        $this-&gt;options = array_merge($this-&gt;options, $options);
+    }
+
+    public function __toString()
+    {
+        try {
+            $this-&gt;__invoke();
+        } catch(\Exception $e) {
+            trigger_error((string)$e);
+        }
+        return $this-&gt;text;
+    }
+
+    public function __invoke()
+    {
+        return '';
+    }
+}
+</code></pre>
+
+<p>Jak widać jest to bardzo krótka, lekka klasa. Gotowa do rozbudowywania.
+Pisząc komponenty interpreter nadpisuje funkcję <code>__invoke()</code>. Rolą funkcji __invoke()
+jest zapełnienie zmiennej <code>$this-&gt;text</code></p>
+
+<p>Pozostaje mi już tylko pozostawić ciebie twojej wyobraźni:)</p>
