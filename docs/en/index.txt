@@ -1,0 +1,24 @@
+# Documentation
+#
+# This documentation is written in MultiMarkdown format and may be consolidated into HTML, PDF,
+# ODF, Latex, or other formats using the `mmd_merge` command line utility.
+#
+# Learn more about MultiMarkdown at <http://fletcherpenney.net/multimarkdown/>
+
+welcome.markdown
+system-requirements.markdown
+instantiation.markdown
+	instantiation-sandbox.markdown
+	instantiation-manual.markdown
+	instantiation-composer.markdown
+how-does-it-work.markdown
+why-should-i-use-it.markdown
+hello-world-example.markdown
+metadata-tags.markdown
+	metadata-tags-public.markdown
+	metadata-tags-state.markdown
+	metadata-tags-on-state.markdown
+	metadata-tags-on-demand.markdown
+	metadata-tags-css.markdown
+	metadata-tags-js.markdown
+custom-metadata-tags.markdown
