@@ -50,43 +50,26 @@ class OnStateMetadataTag extends AbstractMetadataTag
         return 'name';
     }
 
-    public function getGetterMethodDefinition()
+
+    public function getBeforeRenderRetrieveCode()
     {
-        $parent = parent::getGetterMethodDefinition();
         $state = $this->definition->getDefaultProperty();
         $name_und = $this->variable->getNameUnderscored();
         $nameCamel = $this->variable->getName();
         $type = $this->variable->getType();
         $default = $this->variable->getDefaultValue();
-        ob_start();
-        ?>
-    if($this->options['current_state'] == '<?php echo $state; ?>') {
-        if(!isset($this->options['<?php echo $name_und; ?>'])) {
-            <?php if($this->variable->isSimpleType()): ?>
-            $this->options['<?php echo $name_und; ?>'] = <?php echo $default; ?>;
-            <?php else: ?>
-            $this->options['<?php echo $name_und; ?>'] = new <?php echo $type . '(' . $default; ?>);
-            <?php endif; ?>
-
-        }
-        return $this->options['<?php echo $name_und; ?>'];
-    } else {
-        return '';
-    }
-    <?php
+        ob_start();;
+?>
+        <?php echo '$' . $nameCamel; ?> = (@$this->options['current_state'] == '<?php echo $state; ?>')
+            ?  <?php if($this->variable->isSimpleType()): ?>
+                isset($this->options['<?php echo $name_und; ?>'])
+                    ? $this->options['<?php echo $name_und ?>'] : <?php echo $default; ?>
+                <?php else: ?>
+                new <?php echo $type . '(' . $default; ?>)
+                <?php endif; ?>
+            : '';
+<?php
         return ob_get_clean();
-    }
-
-    public function getInitializationCode()
-    {
-        return '$this->options[\'' . $this->variable->getNameUnderscored() . '\'] = null;'
-                . PHP_EOL;
-    }
-
-    public function getBeforeRenderRetrieveCode()
-    {
-        $nameCamel = $this->variable->getName();
-        return '$' . $nameCamel . ' = $this->' . $nameCamel . '();' . PHP_EOL;
     }
 
 }
