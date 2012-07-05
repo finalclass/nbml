@@ -17,7 +17,7 @@ And then its usage:
 
 	<?php
 	$helloComponent = new HelloWorld();
-	echo $helloWorld->message(); //Hello World!
+	echo $helloComponent->message(); //Hello World!
 	$helloComponent->message('Hello Internet!');
 	echo $helloComponent->message(); //Hello Internet!
 	echo $helloComponent; //<div class..../>
