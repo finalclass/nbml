@@ -58,11 +58,11 @@ class ViewAutoLoader extends AbstractAutoLoader
                     ? $defaultDestinationDir . DIRECTORY_SEPARATOR . $classNameDirNotation
                     : $noExtensionPath;
 
-            if(is_dir($noExtensionPath)) {
+            $viewPath = $noExtensionPath . '.nbml';
+            if(!file_exists($viewPath) && is_dir($noExtensionPath)) {
                 $viewPath = $noExtensionPath . DIRECTORY_SEPARATOR . $classShortName . '.nbml';
-            } else {
-                $viewPath = $noExtensionPath . '.nbml';
             }
+
             $compiledPath = $noExtensionPathCompiled . DIRECTORY_SEPARATOR . $classShortName . '.php';
 
 			$lastViewModification = @filemtime($viewPath); //false is return if file does not exists

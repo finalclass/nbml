@@ -20,7 +20,7 @@ The content of our file **composer.json** should be as follows:
 	{
 		"require":{
 			"php":">=5.3.0",
-			"finalclass/nbml":"dev-master",
+			"finalclass/nbml":"dev-master"
 		},
 		"autoload":{
 			"psr-0":{
@@ -30,7 +30,7 @@ The content of our file **composer.json** should be as follows:
 	}
 
 where MyNamespace is your namespace - any custom string.
-Notice block require: `"finalclass/nbml":"dev-master",` - I assume using the development version 
+Notice block require: `"finalclass/nbml":"dev-master"` - I assume using the development version
 of nbml package here. It is not recommended solution - type here the version that fits you the most.
 
 When we create and save this file, it's needed to run script composer.phar at folder where the project is being created, in this way:
@@ -41,8 +41,6 @@ This script will create vendor folder, and fill it up with dependencies.
 At this moment ViewAutoLoader should be initialised.
 
 Content of the file **index.php**
-
-	use \NbmlHome\View\Layout;
 
 	$autoLoader = include '../vendor/autoload.php';
 	$viewAutoLoader = include '../src/init_view_auto_loader.php';
