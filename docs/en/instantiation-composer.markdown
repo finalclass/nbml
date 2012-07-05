@@ -15,7 +15,7 @@ Let us assume, that we have following structure of folders / files:
 * composer.json
 * composer.phar
 
-The content of our file **composer.json** should be as follows:
+The content of our **composer.json** file should be as follows:
 
 	{
 		"require":{
