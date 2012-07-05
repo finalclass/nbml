@@ -58,16 +58,21 @@ class OnStateMetadataTag extends AbstractMetadataTag
         $nameCamel = $this->variable->getName();
         $type = $this->variable->getType();
         $default = $this->variable->getDefaultValue();
-        ob_start();;
+
+        ob_start();
 ?>
-        <?php echo '$' . $nameCamel; ?> = (@$this->options['current_state'] == '<?php echo $state; ?>')
-            ?  <?php if($this->variable->isSimpleType()): ?>
-                isset($this->options['<?php echo $name_und; ?>'])
-                    ? $this->options['<?php echo $name_und ?>'] : <?php echo $default; ?>
+        <?php echo '$' . $nameCamel?> = '';
+        if(@$this->options['current_state'] == '<?php echo $state; ?>') {
+            if(@$this->options['<?php echo $name_und ?>']) {
+                <?php echo '$' . $nameCamel?> = $this->options['<?php echo $name_und?>'];
+            } else {
+                <?php if($this->variable->isSimpleType()): ?>
+                    <?php echo '$' . $nameCamel?> = <?php echo $default?>;
                 <?php else: ?>
-                new <?php echo $type . '(' . $default; ?>)
+                    <?php echo '$' . $nameCamel?> = new <?php echo $type . '(' . $default; ?>);
                 <?php endif; ?>
-            : '';
+            }
+        }
 <?php
         return ob_get_clean();
     }

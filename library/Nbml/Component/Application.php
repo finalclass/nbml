@@ -118,6 +118,7 @@ class Application extends Component
 
     public function __toString()
     {
+        try {
         //Render children first so that they can add scripts, styles or set title and other meta
         $content = $this->__invoke()->text;
         ob_start();
@@ -141,6 +142,10 @@ class Application extends Component
     </html>
     <?php
         return ob_get_clean();
+        } catch (\Exception $e) {
+            trigger_error((string)$e);
+            return '';
+        }
     }
 
     public function __invoke()

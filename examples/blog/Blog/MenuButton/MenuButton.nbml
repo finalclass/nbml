@@ -1,0 +1,19 @@
+<?php /**
+ * @var $this \Nbml\Component
+ *
+ * [State] @var $normalState boolean(true)
+ * [State] @var $selectedState boolean(false)
+ *
+ * [OnState('selectedState')]
+ * [Public]
+ * @var $selectedClass string('selected')
+ *
+ * [Public] @var $label string
+ * [Public] @var $href string
+ */ ?>
+
+<a href="<?=$href?>"
+   title="<?=$label?>"
+   class="<?=$selectedClass?>">
+    <?=$label?>
+</a>

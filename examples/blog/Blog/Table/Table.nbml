@@ -1,0 +1,34 @@
+<?php /**
+ * @var $this \Nbml\Component
+ *
+ * @var $model \Blog\TopicModel
+ */
+?>
+<table>
+    <thead>
+    <tr>
+        <td>Id</td>
+        <td>Name</td>
+        <td>Operations</td>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($model->all() as $record): ?>
+    <tr>
+        <td><?=$record['id']?></td>
+        <td><?=$record['title']?></td>
+        <td>
+            <ul>
+                <li>
+                    <a href="/edit?id=<?=$record['id']?>">edit</a>
+                </li>
+                <li>
+                    <a href="/remove?id=<?=$record['id']?>">remove</a>
+                </li>
+            </ul>
+
+        </td>
+    </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>

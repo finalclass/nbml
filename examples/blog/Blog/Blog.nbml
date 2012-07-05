@@ -1,0 +1,24 @@
+<?php /**
+ * @var $this \Nbml\Component
+ *
+ * [State] @var $listState boolean(true)
+ * [State] @var $formState boolean(false)
+ *
+ * @var $listButton \Blog\MenuButton
+ * @var $addButton \Blog\MenuButton
+ *
+ * [OnState('listState')]
+ * @var $table \Blog\Table
+ *
+ * [OnState('formState')]
+ * @var $form \Blog\Form
+ */ ?>
+
+<ul>
+    <li><?=$listButton->label('List')->href('/')?></li>
+    <li><?=$addButton->label('Add topic')->href('/add')?></li>
+</ul>
+
+<div class="content">
+    <?=$table . $form?>
+</div>
