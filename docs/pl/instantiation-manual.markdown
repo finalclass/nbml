@@ -66,7 +66,7 @@ Teraz możemy bez obaw inicjalizować autoloader do klas *.nbml
 			->register();
 
 Powyższy skrypt zakłada, że pliki *.nbml znajdują się w folderze library, oraz że po kompilacji będą one umieszczane
-w folderze tmp. Autoloader jest ustawiony w ten sposób, że niezależnie od tego czy plik był zmieniony czy nie, będzie
+w folderze tmp. Upewnij się, że serwer www ma uprawnienia do zapisu w tym folderze. Autoloader jest ustawiony w ten sposób, że niezależnie od tego czy plik był zmieniony czy nie, będzie
 on kompilowany każdorazowo przy wywołaniu autoloadera. Jest to bardzo czasochłonne i w środowisku stabilnym należy
 to wyłączyć. Gdy opcja setAlwaysCompile zostanie ustawiona na false, kompilator będzie uruchamiany **tylko** w przypadku
 gdy czas ostatniej zmiany pliku *.nbml jest większy od czasu ostatniej zmiany wygenerowanego pliku *.php

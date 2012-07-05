@@ -1,7 +1,7 @@
 # Creating an instance manually [instatiation-manual]
 
 We can, of course, initialise the interpreter manually. Thanks to this we can at its fullest have benefit from the configuration options, which are provided by the interpreter.
-Below you can found an exemplary manual configuration:
+Below you can find an exemplary manual configuration:
 
 **file index.php**
 
@@ -65,8 +65,8 @@ Hence we can without worries initialise autoloader to the *.nbml classes
 			->register();
 
 The foregoing script assumes, that *.nbml files are located in library folder, and also that after compilation they would be placed
-in tmp folder. The Autoloader is set, that regardless of whether file was changed or not, 
-it will be
+in tmp folder. Make sure www server has privileges to write to this folder.
+The Autoloader is set, that regardless of whether file was changed or not, it will be
 compiled each time the autoloader is invoked. It consumes so much time, 
 that in stable environment this option 
 should be turned off. When the option setAlwaysCompile is set to false, the compiler will be run **only** in case
