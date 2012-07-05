@@ -77,5 +77,5 @@ Treść pliku **/src/init_view_auto_loader.php**:
 
 	return $viewAutoLoader;
 
-Jest to identyczny plik jak w przypadku instalacji manualnej [instantiation-manual] z tym, że nie ma tutaj
+Jest to identyczny plik jak w przypadku wersji manualnej [instantiation-manual] z tym, że nie ma tutaj
 tworzenia instancji ClassAutoLoader.

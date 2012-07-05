@@ -176,9 +176,7 @@ $viewAutoLoader = include '../src/init_view_auto_loader.php';
 </code></pre>
 
 <p>As can be seen, the autoloader file included by composer, was added. Through this there is no need to
-create instance ClassAutoLoader provided by nbml.
-W index.php jest również includowany plik init_view_auto_loader.php który należy napisać samodzielnie.
-Poniżej znajduje się przykładowa jego zawartość:</p>
+create ClassAutoLoader instance provided by nbml.</p>
 
 <p>In index.php there is also included file init_view_auto_loader.php, whitch has to be written by you.
 Below can be found the exemplary content:</p>
@@ -211,7 +209,7 @@ $viewAutoLoader-&gt;setViewCompiler($viewCompiler);
 return $viewAutoLoader;
 </code></pre>
 
-<p>It is identical file as in case of manual installation [instantiation-manual] with the exception, that there is no
+<p>It is identical file as in case of manual instantiation [instantiation-manual] with the exception, that there is no
 creating a ClassAutoLoader instance here.</p>
 
 <h1 id="how-does-it-work">How does it work?</h1>
