@@ -149,7 +149,7 @@ I will show how we can make use of composer to establish a new project.</p>
 <pre><code>{
     &quot;require&quot;:{
         &quot;php&quot;:&quot;&gt;=5.3.0&quot;,
-        &quot;finalclass/nbml&quot;:&quot;dev-master&quot;,
+        &quot;finalclass/nbml&quot;:&quot;dev-master&quot;
     },
     &quot;autoload&quot;:{
         &quot;psr-0&quot;:{
@@ -160,7 +160,7 @@ I will show how we can make use of composer to establish a new project.</p>
 </code></pre>
 
 <p>where MyNamespace is your namespace - any custom string.
-Notice block require: <code>&quot;finalclass/nbml&quot;:&quot;dev-master&quot;,</code> - I assume using the development version
+Notice block require: <code>&quot;finalclass/nbml&quot;:&quot;dev-master&quot;</code> - I assume using the development version
 of nbml package here. It is not recommended solution - type here the version that fits you the most.</p>
 
 <p>When we create and save this file, it&#8217;s needed to run script composer.phar at folder where the project is being created, in this way:</p>
@@ -173,17 +173,19 @@ At this moment ViewAutoLoader should be initialised.</p>
 
 <p>Content of the file <strong>index.php</strong></p>
 
-<pre><code>use \NbmlHome\View\Layout;
-
-$autoLoader = include '../vendor/autoload.php';
+<pre><code>$autoLoader = include '../vendor/autoload.php';
 $viewAutoLoader = include '../src/init_view_auto_loader.php';
 </code></pre>
 
 <p>As can be seen, the autoloader file included by composer, was added. Through this there is no need to
 create instance ClassAutoLoader provided by nbml.
-In index.php there is also included file init_view_auto_loader.php, with following content:</p>
+W index.php jest również includowany plik init_view_auto_loader.php który należy napisać samodzielnie.
+Poniżej znajduje się przykładowa jego zawartość:</p>
 
-<p>Content of file <strong>/src/init_view_auto_loader.php</strong></p>
+<p>In index.php there is also included file init_view_auto_loader.php, whitch has to be written by you.
+Below can be found the exemplary content:</p>
+
+<p>Content of file <strong>/src/init_view_auto_loader.php</strong>:</p>
 
 <pre><code>&lt;?php
 
@@ -289,8 +291,11 @@ The nbml obviously risen to the occasion, and presents you such a program.</p>
 <p>I assume you have such folders&#8217; structure:</p>
 
 <ul>
-<li><p>library</p></li>
-<li><p>Nbml</p></li>
+<li><p>library</p>
+
+<ul>
+<li>Nbml</li>
+</ul></li>
 <li><p>public</p>
 
 <ul>

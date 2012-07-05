@@ -148,7 +148,7 @@ Zaprezentuję w jaki sposób możemy skorzystać z composera do założenia nowe
 <pre><code>{
     &quot;require&quot;:{
         &quot;php&quot;:&quot;&gt;=5.3.0&quot;,
-        &quot;finalclass/nbml&quot;:&quot;dev-master&quot;,
+        &quot;finalclass/nbml&quot;:&quot;dev-master&quot;
     },
     &quot;autoload&quot;:{
         &quot;psr-0&quot;:{
@@ -159,7 +159,7 @@ Zaprezentuję w jaki sposób możemy skorzystać z composera do założenia nowe
 </code></pre>
 
 <p>gdzie MyNamespace jest twoją przestrzenią nazw - dowolnym łańcuchem znaków.
-Zwróć uwagę na blok require: <code>&quot;finalclass/nbml&quot;:&quot;dev-master&quot;,</code> - zakładam tutaj użycie wersji developerskiej
+Zwróć uwagę na blok require: <code>&quot;finalclass/nbml&quot;:&quot;dev-master&quot;</code> - zakładam tutaj użycie wersji developerskiej
 pakietu nbml. Nie jest to zalecane rozwiązanie - wprowadź tutaj wersję najbardziej ci odpowiadającą.
 Gdy utworzymy i zapiszemy ten plik, należy uruchomić skrypt composer.phar będąc w katalogu
 z tworzonym projektem, w ten sposób:</p>
@@ -172,17 +172,16 @@ W tym momencie należy zainicjalizować ViewAutoLoader.</p>
 
 <p>Treść pliku <strong>index.php</strong></p>
 
-<pre><code>use \NbmlHome\View\Layout;
-
-$autoLoader = include '../vendor/autoload.php';
+<pre><code>$autoLoader = include '../vendor/autoload.php';
 $viewAutoLoader = include '../src/init_view_auto_loader.php';
 </code></pre>
 
 <p>Jak widać jest tutaj zaincludowany plik autoloadera dołączony przez composer. Dzięki temu nie ma konieczności
 tworzenia instancji ClassAutoLoader dostarczonej przez Nbml.
-W index.php jest również includowany plik init_view_auto_loader.php którego treść jest następująca:</p>
+W index.php jest również includowany plik init_view_auto_loader.php który należy napisać samodzielnie.
+Poniżej znajduje się przykładowa jego zawartość:</p>
 
-<p>Treść pliku <strong>/src/init_view_auto_loader.php</strong></p>
+<p>Treść pliku <strong>/src/init_view_auto_loader.php</strong>:</p>
 
 <pre><code>&lt;?php
 
@@ -290,8 +289,11 @@ nbml oczywiście stanął na wysokości zadania i takowy program wam prezentuje.
 <p>Zakładam taką strukturę katalogów:</p>
 
 <ul>
-<li><p>library</p></li>
-<li><p>Nbml</p></li>
+<li><p>library</p>
+
+<ul>
+<li>Nbml</li>
+</ul></li>
 <li><p>public</p>
 
 <ul>

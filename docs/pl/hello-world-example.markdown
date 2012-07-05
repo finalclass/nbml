@@ -7,7 +7,7 @@ Zakładam taką strukturę katalogów:
 
 * library
 
-  * Nbml
+	* Nbml
 * public
 
 	* HelloWorld
