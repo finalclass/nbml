@@ -47,9 +47,10 @@ Treść pliku **index.php**
 
 Jak widać jest tutaj zaincludowany plik autoloadera dołączony przez composer. Dzięki temu nie ma konieczności
 tworzenia instancji ClassAutoLoader dostarczonej przez Nbml.
-W index.php jest również includowany plik init_view_auto_loader.php którego treść jest następująca:
+W index.php jest również includowany plik init_view_auto_loader.php który należy napisać samodzielnie.
+Poniżej znajduje się przykładowa jego zawartość:
 
-Treść pliku **/src/init_view_auto_loader.php**
+Treść pliku **/src/init_view_auto_loader.php**:
 
 	<?php
 
