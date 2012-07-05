@@ -57,7 +57,7 @@ HelloWorld.nbml. Here is its content:
 	class HelloWorld extends \Nbml\Component\Application
 	{
 
-	    static public $DIR = 'D:\Dokumenty\nbml\strona_projektu\www\vendor\finalclass\nbml\examples\hello_world\HelloWorld\HelloWorld.nbml';
+	    static public $DIR = '/var/www/hello_world/HelloWorld/HelloWorld.nbml';
 
 	    /**
 	     * @return \HelloWorld
