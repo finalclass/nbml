@@ -57,7 +57,7 @@ pliku HelloWorld.nbml. Oto treść tego pliku:
 	class HelloWorld extends \Nbml\Component\Application
 	{
 
-	    static public $DIR = '/var/www/hello_world/HelloWorld/HelloWorld.nbml';
+	    static public $PATH = '/var/www/hello_world/HelloWorld/HelloWorld.nbml';
 
 	    /**
 	     * @return \HelloWorld
