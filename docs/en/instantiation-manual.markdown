@@ -83,5 +83,5 @@ Then, what remains, is creating a compiler instance and adding it to autoloader.
 
 This operation is separated from ViewAutoLoader in purpose to allow more customisation - you can create your own compiler,
 or extend the existing one completely as you wish.
-Standard metadata-tags [metadata-tags] are included. On this place you can include your own tags, or disable
+Standard [metadata tags][metadata-tags] are included. On this place you can include your own tags, or disable
 unused ones to improve code clarity.

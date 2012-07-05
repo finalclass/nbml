@@ -82,5 +82,5 @@ Następnie pozostaje nam utworzenie instancji kompilatora i dodanie jej do autol
 
 Operacja ta jest odseparowana od ViewAutoLoader w celu większej customizacji - możesz utworzyć własny kompilator,
 czy rozszerzyć istneiejący wedle uznania.
-Dołączane są standardowe metadata tagi [metadata-tags]. W tym miejscu możesz załączyć własne, lub wyłączyć
+Dołączane są standardowe [metadata tagi][metadata-tags]. W tym miejscu możesz załączyć własne, lub wyłączyć
 nieużywane w celu poprawy czytelności kodu.
