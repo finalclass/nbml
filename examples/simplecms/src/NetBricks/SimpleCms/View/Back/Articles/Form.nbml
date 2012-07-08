@@ -29,10 +29,12 @@
             <label for="body_textarea">Body</label>
         </dt>
         <dd>
+            Available BBCode tags:<br/>
+            [b], [i], [size], [color], [center], [quote], [url], [img]<br/>
             <textarea id="body_textarea"
                       name="body"
-                      cols="30"
-                      rows="10"
+                      cols="70"
+                      rows="20"
                       class="<?=$model->bodyTextareaClassName?>"
                     ><?=$model->article->body?></textarea>
             <?php if($model->bodyError): ?>

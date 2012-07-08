@@ -6,6 +6,10 @@
  */ ?>
 <form action="" method="post">
 
+    <?php if($model->firstTime): ?>
+    <p>First time logging in? Try credentials: admin/admin</p>
+    <?php endif; ?>
+
     <?php foreach($model->errorMessages as $msg): ?>
     <p class="warning"><?=$msg?></p>
     <?php endforeach; ?>

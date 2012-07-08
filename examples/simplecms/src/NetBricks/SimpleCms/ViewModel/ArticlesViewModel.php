@@ -23,6 +23,7 @@ SOFTWARE.
  */
 namespace NetBricks\SimpleCms\ViewModel;
 use \NetBricks\SimpleCms\Di;
+use \NetBricks\SimpleCms\Model\Article;
 /**
  * @author: Sel <s@finalclass.net>
  * @date: 08.07.12
@@ -58,7 +59,8 @@ class ArticlesViewModel
 
     private function remove()
     {
-        throw new \Exception('Not implemented yet');
+        Article::remove($_GET['id']);
+        header('Location: /admin/articles');
     }
 
 }

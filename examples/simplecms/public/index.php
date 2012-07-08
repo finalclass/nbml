@@ -23,7 +23,7 @@ initialize_autoloaders:
     $viewAutoLoader = new ViewAutoLoader();
     $viewAutoLoader
                     ->setCompilerDefaultDestinationDir(__DIR__ . '/../tmp')
-                    ->setAlwaysCompile(false)
+                    ->setAlwaysCompile(true)
                     ->addIncludePath(__DIR__ . '/../src')
                     ->register();
 

@@ -96,4 +96,10 @@ class Article extends Model
         return Di::db()->lastInsertId();
     }
 
+    static public function remove($id)
+    {
+        $stmt = Di::db()->prepare('delete from article where id=:id');
+        $stmt->execute(array(':id' => (int)$id));
+    }
+
 }

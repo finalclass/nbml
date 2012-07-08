@@ -37,13 +37,15 @@ class LoginViewModel
     /** @var string */
     public $password;
 
+    public $firstTime = false;
+
     public $errorMessages = array();
 
     public function __construct()
     {
         $this->username = isset($_POST['username']) ? $_POST['username'] : '';
         $this->password = isset($_POST['password']) ? $_POST['password'] : '';
-
+        $this->firstTime = !file_exists(Di::secretFilePath());
         //If post
         if(isset($_POST['username'])) {
             $this->login();
@@ -55,6 +57,9 @@ class LoginViewModel
         if($this->username != 'admin') {
             $this->errorMessages[] = 'Username or password invalid';
             return;
+        }
+        if($this->firstTime) {
+            file_put_contents(Di::secretFilePath(), md5('admin'));
         }
         $secret = file_get_contents(Di::secretFilePath());
         if(md5($this->password) != $secret) {
