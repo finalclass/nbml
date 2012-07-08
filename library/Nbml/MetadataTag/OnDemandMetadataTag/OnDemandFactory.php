@@ -31,10 +31,10 @@ class OnDemandFactory
 {
 
     private $className = '';
-    private $constructorArgument = '';
+    private $constructorArgument = array();
     private $instance = null;
 
-    public function __construct($className, $constructorArgument = '')
+    public function __construct($className, $constructorArgument = array())
     {
         $this->className = $className;
         $this->constructorArgument = $constructorArgument;

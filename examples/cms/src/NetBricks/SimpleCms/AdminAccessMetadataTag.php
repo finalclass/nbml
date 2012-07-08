@@ -21,15 +21,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-namespace Nbml\MetadataTag;
-use Nbml\MetadataTag\AbstractMetadataTag;
-
+namespace NetBricks\SimpleCms;
+use \Nbml\MetadataTag\AbstractMetadataTag;
 /**
  * @author: Sel <s@finalclass.net>
- * @date: 28.06.12
- * @time: 00:13
+ * @date: 08.07.12
+ * @time: 03:15
  */
-class OnDemandMetadataTag extends AbstractMetadataTag
+class AdminAccessMetadataTag extends AbstractMetadataTag
 {
     /**
      * Returns [TagName] of the metadata tag
@@ -38,40 +37,18 @@ class OnDemandMetadataTag extends AbstractMetadataTag
      */
     static function getMetadataTagName()
     {
-        return 'OnDemand';
+        return 'AdminAccess';
     }
 
     public function getInitializationCode()
     {
-        return '$this->options[\'' . $this->variable->getNameUnderscored() . '\'] = null;'
-                . PHP_EOL;
-    }
-
-    public function getGetterMethodDefinition()
-    {
         ob_start();
-        $name_und = $this->variable->getNameUnderscored();
-        $nameCamel = $this->variable->getName();
-        $type = $this->variable->getType();
-        $default = $this->variable->getDefaultValue();
-        ?>
-
-        if(!isset($this->options['<?php echo $name_und; ?>'])) {
-            <?php if($default !== null): ?>
-            $this->options['<?php echo $name_und; ?>'] = new \Nbml\MetadataTag\OnDemandMetadataTag\OnDemandFactory('<?php echo $type . '\',' .  $default; ?>);
-            <?php else: ?>
-            $this->options['<?php echo $name_und; ?>'] = new \Nbml\MetadataTag\OnDemandMetadataTag\OnDemandFactory('<?php echo $type; ?>');
-            <?php endif; ?>
+?>
+        if(!\NetBricks\SimpleCms\Di::isLogged()) {
+            header('Location: /login');
         }
-        return $this->options['<?php echo $name_und; ?>'];
-        <?php
+<?php
         return ob_get_clean();
-    }
-
-    public function getBeforeRenderRetrieveCode()
-    {
-        $nameCamel = $this->variable->getName();
-        return '$' . $nameCamel . ' = $this->' . $nameCamel . '();' . PHP_EOL;
     }
 
 }

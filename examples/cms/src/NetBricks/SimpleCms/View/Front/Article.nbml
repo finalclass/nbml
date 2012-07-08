@@ -1,0 +1,9 @@
+<?php /**
+ * @var $this \Nbml\Component
+ *
+ * @var $model \NetBricks\SimpleCms\ViewModel\ArticleViewModel
+ */ ?>
+
+<h2><?=$model->article->title?></h2>
+
+<?=$model->article->body?>

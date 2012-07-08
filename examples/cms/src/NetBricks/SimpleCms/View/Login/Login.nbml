@@ -1,0 +1,36 @@
+<?php /**
+ * [Css('/css/login.css')]
+ * @var $this \Nbml\Component
+ *
+ * @var $model \NetBricks\SimpleCms\ViewModel\LoginViewModel
+ */ ?>
+<form action="" method="post">
+
+    <?php foreach($model->errorMessages as $msg): ?>
+    <p class="warning"><?=$msg?></p>
+    <?php endforeach; ?>
+
+    <dl>
+        <dt>
+            <label for="username_input">Username</label>
+        </dt>
+        <dd>
+            <input id="username_input"
+                   type="text"
+                   name="username"
+                   value="<?=$model->username?>"/>
+        </dd>
+
+        <dt>
+            <label for="password_input">Password</label>
+        </dt>
+        <dd>
+            <input id="password_input"
+                   type="password"
+                    name="password"/>
+        </dd>
+    </dl>
+
+    <input type="submit" value="Login"/>
+
+</form>

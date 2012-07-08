@@ -1,0 +1,18 @@
+<?php /**
+ * [AdminAccess]
+ * @var $this \Nbml\Component
+ *
+ * @var $model \NetBricks\SimpleCms\ViewModel\ArticlesViewModel
+ */ ?>
+<h2>Articles</h2>
+
+<ul class="sub_menu">
+    <li>
+        <a href="/admin/articles">List</a>
+    </li>
+    <li>
+        <a href="/admin/articles/add">Add article</a>
+    </li>
+</ul>
+
+<?=$model->getContent()?>

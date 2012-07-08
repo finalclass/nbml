@@ -1,0 +1,42 @@
+<?php /**
+ * [AdminAccess]
+ * @var $this \Nbml\Component
+ */
+?>
+
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Operations</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach (\NetBricks\SimpleCms\Model\Article::all() as $article): ?>
+    <tr>
+        <td><?=$article->id?></td>
+        <td><?=$article->title?></td>
+        <td>
+            <ul class="operations">
+                <li>
+                    <a href="/admin/articles/edit?id=<?=$article->id?>"
+                       title="Edit"
+                       class="edit">
+                        Edit
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/articles/remove?id=<?=$article->id?>"
+                       title="Remove"
+                       class="remove"
+                       onclick="return confirm('Are you sure?');">
+                        Remove
+                    </a>
+                </li>
+            </ul>
+        </td>
+    </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>

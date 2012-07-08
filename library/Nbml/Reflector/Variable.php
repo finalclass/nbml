@@ -128,14 +128,15 @@ class Variable
         //Filter default value:
         $default = trim($default);
         $defLength = strlen($default);
-
-        if (@$default[0] == '(' && @$default[$defLength - 1] == ')') {
-            $default = substr($default, 1, $defLength - 2);
+        if ($defLength > 1) {
+            if (@$default[0] == '(' && @$default[$defLength - 1] == ')') {
+                $default = substr($default, 1, $defLength - 2);
+            }
+            $this->defaultValue = $default;
         }
 
         //Assign to object properties:
         $this->name = $varName;
-        $this->defaultValue = $default;
         $this->type = $type;
         return $pos;
     }
@@ -191,7 +192,7 @@ class Variable
 
     public function getDefaultValue()
     {
-        if($this->defaultValue && $this->getType() == 'array') {
+        if ($this->defaultValue && $this->getType() == 'array') {
             return 'array(' . $this->defaultValue . ')';
         }
         return $this->defaultValue;
