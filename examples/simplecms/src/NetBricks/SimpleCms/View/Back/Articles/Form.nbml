@@ -29,8 +29,6 @@
             <label for="body_textarea">Body</label>
         </dt>
         <dd>
-            Available BBCode tags:<br/>
-            [b], [i], [size], [color], [center], [quote], [url], [img]<br/>
             <textarea id="body_textarea"
                       name="body"
                       cols="70"

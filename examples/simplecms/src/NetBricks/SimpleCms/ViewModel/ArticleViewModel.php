@@ -40,7 +40,9 @@ class ArticleViewModel
         $id = @$_GET['id'];
         $this->article = Article::find($id);
         if(!$this->article) {
-            $this->article = new Article();
+            //Find first article
+            $all = Article::all();
+            $this->article = reset($all);
         }
     }
 

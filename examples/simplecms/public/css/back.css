@@ -112,7 +112,6 @@ ul.user_menu li {
     background: -ms-linear-gradient(top,  rgba(125,126,125,1) 0%,rgba(76,76,86,1) 100%); /* IE10+ */
     background: linear-gradient(to bottom,  rgba(125,126,125,1) 0%,rgba(76,76,86,1) 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#4c4c56',GradientType=0 ); /* IE6-9 */
-
 }
 
 .content {
@@ -121,4 +120,8 @@ ul.user_menu li {
 
 p.warning {
     color: #f00;
+}
+
+.dashboard {
+    text-align: center;
 }

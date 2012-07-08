@@ -1,5 +1,10 @@
 <?php /**
  * [AdminAccess]
  * @var $this \Nbml\Component
- */ ?>
-Dashboard
+ */
+?>
+<div class="dashboard">
+    <h1>Dashboard</h1>
+
+    <h3>Powered by nbml</h3>
+</div>
