@@ -1,13 +1,13 @@
-# Własne Metadata tagi [custom-metadata-tags]
+# Custom Metadata tags [custom-metadata-tags]
 
-Silnik nbml umożliwia definiowanie jakie metadata tagi mają być brane
-pod uwagę podczas interpretowania komponentów. Inicjalizując kompilator
-dokonujesz tego wyboru. Przejdź do sekcji [Tworzenie instancji][instantiation]
-aby zgłębić ten proces.
+The nbml engine makes possible to define which metadata tags should be concerned
+when interpreting components. You make this choice when initialising compiler.
+Go to section [Tworzenie instancji][instantiation] to learn more
+about this process.
 
-Klasa `\Nbml\Compiler` posiada metodę `->addTagProcessor($className)`
-która to umożliwia dodawanie własnych znaczników. Przykładowo inicjalizacja
-Metadata tagów dołączonych z biblioteką standardową wygląda w ten sposób:
+Class `\Nbml\Compiler` has a method `->addTagProcessor($className)`
+which allows adding custom tags. For instance initialisation of
+Metadata tags included with standard library looks as follows:
 
 	$viewCompiler = new Compiler();
 	$viewCompiler
@@ -18,7 +18,7 @@ Metadata tagów dołączonych z biblioteką standardową wygląda w ten sposób:
 	      ->addTagProcessor('\Nbml\MetadataTag\CssMetadataTag')
 	      ->addTagProcessor('\Nbml\MetadataTag\JsMetadataTag');
 
-Aby stworzyć własny znacznik musisz stworzyć klasę implementującą interfejs
+In order to create custom tag, you have to create a class that implements interface
 `\Nbml\MetadataTag`:
 
 	namespace Nbml;
@@ -43,16 +43,16 @@ Aby stworzyć własny znacznik musisz stworzyć klasę implementującą interfej
 	    function getDefaultPropertyName();
 	}
 
-Z pomocą przychodzi klasa `\Nbml\MetadataTag\AbstractMetadataTag` która to implementuje
-większość metod interfejsu `\Nbml\MetadataTag`. Zaleca się rozszerzanie tej klasy
-w celu tworzenia nowych procesorów znaczników.
+Here comes to aid class `\Nbml\MetadataTag\AbstractMetadataTag` which implements
+most of the methods of `\Nbml\MetadataTag` interface. It is recommended to extend this class
+in purpose to create new tags' processors.
 
-## Przykładowy Metadata tag
+## Exemplary Metadata tag
 
-Załóżmy, że chcemy zbudować własny metadata tag `[Hello]` który to dodawał by do
-zmiennej do której jest przypisany łańcuch znaków: "Hello ". Oto treść tego znacznika:
+Let's assume, that we want to build our own metadata tag `[Hello]` which would add to variable which is assigned to 
+the string: "Hello ". Here is this tag's content:
 
-Treść takiego procesora metadata tagów była by następująca:
+Content of such metadata tags' processor shall be as follows:
 
 	<?php
 
@@ -72,12 +72,11 @@ Treść takiego procesora metadata tagów była by następująca:
 	    }
 	}
 
-Aby można było go używać należy go dodać do kompilatora w ten sposób:
+In order to use it, one has to add it to compiler in such way:
 
 	$viewCompiler->addTagProcessor('\HelloMetadataTag')
 
-Od tej pory można już korzystać z metadata tagu `[Hello]`
-
+From this now it is possible to use metadata tag `[Hello]`
 
 **HelloComponent.nbml**
 
@@ -89,11 +88,12 @@ Od tej pory można już korzystać z metadata tagu `[Hello]`
 
 	 <?=$miwa?>
 
-Wywołanie tego komponentu:
+Invoke of this component:
 
 	<?php
 	echo new HelloComponent(); //Hello Miwa
 
+Writing components we have an access 
 Pisząc komponenty mamy dostęp dozmiennej `$this->variable` oraz `$this->definition`.
 Zmienna `$this->variable` jest typu `\Nbml\Reflector\Variable` i jest w niej pełen opis
 zmiennej do kórej dany metadata tag jest przypisany.

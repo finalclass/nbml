@@ -8,7 +8,7 @@ W przeciwnym wypadku jej wartość będzie pustym łańcuchem znaków.
 Metadata tag [\[OnState\]][metadata-tags-on-state]
 przyjmuje jeden argument `name` określający nazwę stanu w którym dana
 zmienna ma się zainicjalizować. Argument `name` jest argumentem domyślnym więc nie
-ma konieczności pisać `[OnState(name='stateName')]`, można skorzystać ze skórconej
+ma konieczności pisać `[OnState(name='stateName')]`, można skorzystać ze skróconej
 formy: `[OnState('stateName')]`.
 
 Rozpatrzmy przypadek przycisku:
