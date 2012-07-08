@@ -4,7 +4,7 @@ namespace NetBricks\SimpleCms\View;
 class Application extends \Nbml\Component\Application
 {
 
-  static public $PATH = 'D:\Dokumenty\nbml\strona_projektu\www\vendor\finalclass\nbml\examples\cms\public\..\src\NetBricks\SimpleCms\View\Application.nbml';
+  static public $PATH = 'D:\Dokumenty\nbml\strona_projektu\www\vendor\finalclass\nbml\examples\simplecms\public\..\src\NetBricks\SimpleCms\View\Application.nbml';
 
   /**
    * @return \NetBricks\SimpleCms\View\Application

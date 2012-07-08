@@ -1,5 +1,4 @@
 <?php
- 
 use \Nbml\AutoLoader\ClassAutoLoader;
 use \Nbml\AutoLoader\ViewAutoLoader;
 use \Nbml\Compiler;
@@ -24,7 +23,7 @@ initialize_autoloaders:
     $viewAutoLoader = new ViewAutoLoader();
     $viewAutoLoader
                     ->setCompilerDefaultDestinationDir(__DIR__ . '/../tmp')
-                    ->setAlwaysCompile(true)
+                    ->setAlwaysCompile(false)
                     ->addIncludePath(__DIR__ . '/../src')
                     ->register();
 
@@ -45,6 +44,7 @@ initialize_autoloaders:
 Di::sqLiteFilePath(realpath(__DIR__ . '/../var/') . '/base.db');
 Di::secretFilePath(realpath(__DIR__ . '/../var/') . '/secret');
 
+//Installation:
 \NetBricks\SimpleCms\Model\Article::initDb();
 
 echo new NetBricks\SimpleCms\View\Application();

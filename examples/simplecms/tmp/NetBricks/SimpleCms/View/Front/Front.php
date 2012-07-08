@@ -4,7 +4,7 @@ namespace NetBricks\SimpleCms\View;
 class Front extends \Nbml\Component
 {
 
-  static public $PATH = 'D:\Dokumenty\nbml\strona_projektu\www\vendor\finalclass\nbml\examples\cms\public\..\src\NetBricks\SimpleCms\View\Front\Front.nbml';
+  static public $PATH = 'D:\Dokumenty\nbml\strona_projektu\www\vendor\finalclass\nbml\examples\simplecms\public\..\src\NetBricks\SimpleCms\View\Front\Front.nbml';
 
   /**
    * @return \NetBricks\SimpleCms\View\Front

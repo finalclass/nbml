@@ -4,7 +4,7 @@ namespace NetBricks\SimpleCms\View;
 class Back extends \Nbml\Component
 {
 
-  static public $PATH = 'D:\Dokumenty\nbml\strona_projektu\www\vendor\finalclass\nbml\examples\cms\public\..\src\NetBricks\SimpleCms\View\Back\Back.nbml';
+  static public $PATH = 'D:\Dokumenty\nbml\strona_projektu\www\vendor\finalclass\nbml\examples\simplecms\public\..\src\NetBricks\SimpleCms\View\Back\Back.nbml';
 
   /**
    * @return \NetBricks\SimpleCms\View\Back
