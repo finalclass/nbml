@@ -653,3 +653,161 @@ It causes adding the following line in component&#8217;s constructor:</p>
 </code></pre>
 
 <h1 id="custom-metadata-tags">Custom Metadata tags</h1>
+
+<p>The nbml engine makes possible to define which metadata tags should be concerned
+when interpreting components. You make this choice when initialising compiler.
+Go to section <a href="#instantiation">Instantation</a> to learn more
+about this process.</p>
+
+<p>Class <code>\Nbml\Compiler</code> has a method <code>-&gt;addTagProcessor($className)</code>
+which allows to add custom tags. For instance initialisation of
+metadata tags provided with standard library looks as follows:</p>
+
+<pre><code>$viewCompiler = new Compiler();
+$viewCompiler
+      -&gt;addTagProcessor('\Nbml\MetadataTag\PublicMetadataTag')
+      -&gt;addTagProcessor('\Nbml\MetadataTag\StateMetadataTag')
+      -&gt;addTagProcessor('\Nbml\MetadataTag\OnDemandMetadataTag')
+      -&gt;addTagProcessor('\Nbml\MetadataTag\OnStateMetadataTag')
+      -&gt;addTagProcessor('\Nbml\MetadataTag\CssMetadataTag')
+      -&gt;addTagProcessor('\Nbml\MetadataTag\JsMetadataTag');
+</code></pre>
+
+<p>In order to create custom tag, you have to create a class that implements interface
+<code>\Nbml\MetadataTag</code>:</p>
+
+<pre><code>namespace Nbml;
+use \Nbml\Reflector\Variable;
+use \Nbml\Reflector\MetadataTagDefinition;
+use \Nbml\Reflector;
+
+interface MetadataTag
+{
+    static function getMetadataTagName();
+    function __construct(Variable $variable, MetadataTagDefinition $definition, Reflector $classReflection);
+    function hasGetter();
+    function getGetterMethodDefinition();
+    function hasSetter();
+    function getSetterMethodDefinition();
+    function hasInitializationCode();
+    function getInitializationCode();
+    function hasBeforeRenderRetrievalCode();
+    function getBeforeRenderRetrieveCode();
+    function getRequiredProperties();
+    function hasDefaultProperty();
+    function getDefaultPropertyName();
+}
+</code></pre>
+
+<p>Here comes to aid class <code>\Nbml\MetadataTag\AbstractMetadataTag</code> which implements
+most of the methods of <code>\Nbml\MetadataTag</code> interface. It is recommended to extend this class
+in purpose to create new tags&#8217; processors.</p>
+
+<h2 id="exemplarymetadatatag">Exemplary metadata tag</h2>
+
+<p>Let&#8217;s assume that we want to build our own metadata tag <code>[Hello]</code>, which would add to variable which is assigned to
+the string: &#8220;Hello &#8221;. Here is this tag&#8217;s content:</p>
+
+<p>Content of such metadata tags&#8217; processor shall be as follows:</p>
+
+<pre><code>&lt;?php
+
+class HelloMetadataTag extends \Nbml\MetadataTag\AbstractMetadataTag
+{
+    static function getMetadataTagName()
+    {
+        return 'Hello';
+    }
+
+    public function getInitializationCode()
+    {
+        $nameUnderscored = $this-&gt;variable-&gt;getNameUnderscored();
+        $default = $this-&gt;variable-&gt;getDefaultValue();
+        return '$this-&gt;options[\'' . $nameUnderscored . '\'] = '
+            . '\'Hello \' . ' .  $default . ';';
+    }
+}
+</code></pre>
+
+<p>In order to use it, one has to add it to compiler in such way:</p>
+
+<pre><code>$viewCompiler-&gt;addTagProcessor('\HelloMetadataTag')
+</code></pre>
+
+<p>From this now it is possible to use metadata tag <code>[Hello]</code></p>
+
+<p><strong>HelloComponent.nbml</strong></p>
+
+<pre><code>&lt;?php /**
+ * @var $this \Nbml\Component
+ *
+ * [Hello] @var $miwa string('Miwa')
+ */ ?&gt;
+
+ &lt;?=$miwa?&gt;
+</code></pre>
+
+<p>Invoke of this component:</p>
+
+<pre><code>&lt;?php
+echo new HelloComponent(); //Hello Miwa
+</code></pre>
+
+<p>When writing components we have an access to variables <code>$this-&gt;variable</code> and <code>$this-&gt;definition</code>.
+<code>$this-&gt;variable</code> is of <code>\Nbml\Reflector\Variable</code> type and has in itself full description
+of variable, which given metadata tag is assigned to.</p>
+
+<p>On the other hand, variable <code>$this-&gt;definition</code>
+is a definiton of given metadata tag (in this case a definition of meta tag Hello).
+It is of type: \Nbml\Reflector\MetadataTagDefinition. In this object we&#8217;ll find
+all data concerning attributes (and its values) of given metadata tag.</p>
+
+<p>Sometimes when building certain metadata tag a necessity can arise to manipulate the entire
+being-built component&#8217;s class. Here comes to aid the property <code>$this-&gt;classReflection</code>
+which is of type <code>\Nbml\Reflector</code>.</p>
+
+<p>Consider also this line in metadata tag <code>[Hello]</code> that is being built:</p>
+
+<pre><code>return '$this-&gt;options[\'' . $nameUnderscored . '\'] = '
+            . '\'Hello \' . ' .  $default . ';';
+</code></pre>
+
+<p>You may wonder where one should know from how to write such line? Well it depends
+on you. It depends on you what your components would inherit from.
+By default it is class <code>\Nbml\Component</code>, its knowledge is crucial here.
+Let&#8217;s have a look at its content:</p>
+
+<pre><code>namespace Nbml;
+
+class Component
+{
+    protected $text = '';
+    protected $options = array();
+    public function __construct($options = array())
+    {
+        $this-&gt;options = array_merge($this-&gt;options, $options);
+    }
+
+    public function __toString()
+    {
+        try {
+            $this-&gt;__invoke();
+        } catch(\Exception $e) {
+            trigger_error((string)$e);
+        }
+        return $this-&gt;text;
+    }
+
+    public function __invoke()
+    {
+        return '';
+    }
+}
+</code></pre>
+
+<p>As it may be seen it is a very short, light class. Ready to being expanded.
+Writing the components, the interpreter overrides function <code>__invoke()</code>.
+The role of the function __invoke()
+is to fill up variable <code>$this-&gt;text</code>.</p>
+
+<p>Whtat remains to me, is to left you with your imagination:)</p>

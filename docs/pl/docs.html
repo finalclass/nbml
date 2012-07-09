@@ -502,7 +502,7 @@ W przeciwnym wypadku jej wartość będzie pustym łańcuchem znaków.</p>
 <p>Metadata tag <a href="#metadata-tags-on-state">[OnState]</a>
 przyjmuje jeden argument <code>name</code> określający nazwę stanu w którym dana
 zmienna ma się zainicjalizować. Argument <code>name</code> jest argumentem domyślnym więc nie
-ma konieczności pisać <code>[OnState(name='stateName')]</code>, można skorzystać ze skórconej
+ma konieczności pisać <code>[OnState(name='stateName')]</code>, można skorzystać ze skróconej
 formy: <code>[OnState('stateName')]</code>.</p>
 
 <p>Rozpatrzmy przypadek przycisku:</p>
@@ -681,16 +681,11 @@ Powoduje on dodanie następującej linijki w konstruktorze komponentu:</p>
 <pre><code>\Nbml\Component\Application::getInstance()-&gt;scripts()-&gt;add('file.js');
 </code></pre>
 
-<h1 id="custom-metadata-tags">Własne Metadata tagi</h1>
+<h1 id="custom-metadata-tags">Custom Metadata tags</h1>
 
-<p>Silnik nbml umożliwia definiowanie jakie metadata tagi mają być brane
-pod uwagę podczas interpretowania komponentów. Inicjalizując kompilator
-dokonujesz tego wyboru. Przejdź do sekcji <a href="#instantiation">Tworzenie instancji</a>
-aby zgłębić ten proces.</p>
+<p>Silnik nbml umożliwia definiowanie jakie metadata tagi mają być brane pod uwagę podczas interpretowania komponentów. Inicjalizując kompilator dokonujesz tego wyboru. Przejdź do sekcji Tworzenie instancji<a href="#instantiation">Instantiation</a> aby zgłębić ten proces.</p>
 
-<p>Klasa <code>\Nbml\Compiler</code> posiada metodę <code>-&gt;addTagProcessor($className)</code>
-która to umożliwia dodawanie własnych znaczników. Przykładowo inicjalizacja
-Metadata tagów dołączonych z biblioteką standardową wygląda w ten sposób:</p>
+<p>Klasa <code>\Nbml\Compiler</code> posiada metodę <code>-&gt;addTagProcessor($className)</code> która to umożliwia dodawanie własnych znaczników. Przykładowo inicjalizacja Metadata tagów dołączonych z biblioteką standardową wygląda w ten sposób:</p>
 
 <pre><code>$viewCompiler = new Compiler();
 $viewCompiler
@@ -728,14 +723,11 @@ interface MetadataTag
 }
 </code></pre>
 
-<p>Z pomocą przychodzi klasa <code>\Nbml\MetadataTag\AbstractMetadataTag</code> która to implementuje
-większość metod interfejsu <code>\Nbml\MetadataTag</code>. Zaleca się rozszerzanie tej klasy
-w celu tworzenia nowych procesorów znaczników.</p>
+<p>Z pomocą przychodzi klasa <code>\Nbml\MetadataTag\AbstractMetadataTag</code> która to implementuje większość metod interfejsu <code>\Nbml\MetadataTag</code>. Zaleca się rozszerzanie tej klasy w celu tworzenia nowych procesorów znaczników.</p>
 
 <h2 id="przykadowymetadatatag">Przykładowy Metadata tag</h2>
 
-<p>Załóżmy, że chcemy zbudować własny metadata tag <code>[Hello]</code> który to dodawał by do
-zmiennej do której jest przypisany łańcuch znaków: &#8220;Hello &#8221;. Oto treść tego znacznika:</p>
+<p>Załóżmy, że chcemy zbudować własny metadata tag <code>[Hello]</code> który to dodawał by do zmiennej do której jest przypisany łańcuch znaków: “Hello ”. Oto treść tego znacznika:</p>
 
 <p>Treść takiego procesora metadata tagów była by następująca:</p>
 
