@@ -4,7 +4,7 @@ namespace Blog;
 class Table extends \Nbml\Component
 {
 
-  static public $DIR = 'D:\Dokumenty\nbml\strona_projektu\www\vendor\finalclass\nbml\examples\blog\Blog\Table\Table.nbml';
+  static public $PATH = 'D:\Dokumenty\nbml\strona_projektu\www\vendor\finalclass\nbml\examples\blog\Blog\Table\Table.nbml';
 
   /**
    * @return \Blog\Table

@@ -389,7 +389,7 @@ class HelloWorld extends \Nbml\Component\Application
 
 <h1 id="metadata-tags">Metadata Tags</h1>
 
-<p>Nbml wykorzystuje phpdoc do definiowania obiektów. Przykładowo taka konstrukcja:</p>
+<p>Nbml wykorzystuje PHPDoc do definiowania obiektów. Przykładowo taka konstrukcja:</p>
 
 <pre><code>&lt;?php /**
  * @var $this \Nbml\Component
@@ -406,9 +406,9 @@ W bibliotece standardowej mamy do dyspozycji następujące tagi: <a href="#metad
 
 <h3 id="atrybutymetadatatagw">Atrybuty Metadata tagów</h3>
 
-<p>Metadata tagi mogą przyjmować pewne atrybuty. Jeżeli dany Metatag przyjmuje atrybuty może
-on również mieć zdefiniowany atrybut domyślny. Dla przykładu atrybut <a href="#metadata-tags-state">[State]</a> może być parametryzowany
-przez atrybut <code>name</code> który to jest atrybutem domyślnym. Zatem zapis:</p>
+<p>Metadata tagi mogą przyjmować pewne atrybuty. Jeżeli dany metatag przyjmuje atrybuty, może
+również mieć zdefiniowany atrybut domyślny. Dla przykładu atrybut <a href="#metadata-tags-state">[State]</a> może być parametryzowany
+przez atrybut <code>name</code>, który to jest atrybutem domyślnym. Zatem zapis:</p>
 
 <pre><code>* [OnState(name='selected')]
 </code></pre>
@@ -418,12 +418,12 @@ przez atrybut <code>name</code> który to jest atrybutem domyślnym. Zatem zapis
 <pre><code>* [OnState('selected')]
 </code></pre>
 
-<p>W przypadku gdy metadata tag przyjmuje więcej atrybutów ich nazwy powinny być oddzielone przecinkami w ten sposób:</p>
+<p>W przypadku gdy metadata tag przyjmuje więcej atrybutów, ich nazwy powinny być oddzielone przecinkami w ten sposób:</p>
 
 <pre><code>* [Tag(attr1='value1', attr2='value2', attr3='value3')]
 </code></pre>
 
-<p>Interpreter umożliwia również prostę tworzenie własnych Metadata tagów.
+<p>Interpreter umożliwia również proste tworzenie własnych Metadata tagów.
 Proces ten opisany jest w tym miejscu <a href="#custom-metadata-tags">Własne Metadata tagi</a></p>
 
 <h2 id="metadata-tags-public">Metadata Tags - Public</h2>
@@ -496,11 +496,11 @@ we współpracy z metatagiem <a href="#metadata-tags-on-state">[OnState]</a></p>
 
 <p>Ustawienie na pewnym komponencie metatagu <a href="#metadata-tags-on-state">[OnState]</a>
 powoduje ustawienie warunku na danej zmiennej.
-<strong>Zmienna zostanie zainicjalizowana tylko w przypadku gdy komponent znajdujować się będzie w zadanym stanie.</strong>
+<strong>Zmienna zostanie zainicjalizowana tylko w przypadku, gdy komponent znajdujować się będzie w zadanym stanie.</strong>
 W przeciwnym wypadku jej wartość będzie pustym łańcuchem znaków.</p>
 
 <p>Metadata tag <a href="#metadata-tags-on-state">[OnState]</a>
-przyjmuje jeden argument <code>name</code> określający nazwę stanu w którym dana
+przyjmuje jeden argument <code>name</code>, określający nazwę stanu w którym dana
 zmienna ma się zainicjalizować. Argument <code>name</code> jest argumentem domyślnym więc nie
 ma konieczności pisać <code>[OnState(name='stateName')]</code>, można skorzystać ze skróconej
 formy: <code>[OnState('stateName')]</code>.</p>
@@ -575,11 +575,11 @@ Powyższa klasa tworzy zadaną zmienną w momencie jej użycia
  &lt;/div&gt;
 </code></pre>
 
-<p>W powyższym przykładzie w miejsce $subComponent zostaje utworzona klasa OnDemandFactory
+<p>W powyższym przykładzie w miejsce $subComponent zostaje utworzona klasa OnDemandFactory,
 a następnie (tylko gdy rand(0, 9) &gt; 4) OnDemandFactory w momencie __toString()
-tworzy obiekt klasy \Nbml\Component jak to było zadane w phpDoc.</p>
+tworzy obiekt klasy \Nbml\Component jak to było zadane w PHPDoc.</p>
 
-<p>Powyższy przykład ma za cel zaprezentowanie koncepcji działania znacznika [OnDemand]
+<p>Powyższy przykład ma za cel zaprezentowanie koncepcji działania znacznika [OnDemand],
 jest on jednak bezużyteczny. [OnDemand] sprawdza się idealnie przy &#8220;ciężkich&#8221; komponentach
 których inicjalizacja wiąże się z dużym obciążeniem systemu.</p>
 
@@ -589,8 +589,8 @@ których inicjalizacja wiąże się z dużym obciążeniem systemu.</p>
 Nbml dostarcza podstawową
 wersję komponentu który jest dokumentem html: <code>\Nbml\Component\Application</code>.
 Można tę wersję rozbudować według własnych potrzeb. Należy zwrócić uwagę, że
-nbml nie umożliwia ręcznego umieszczania plików css i js (można to zrobić jednak
-nie jest to wskazane). Zamiast tego zaleca się tworzenie głównego komponentu tak
+nbml nie umożliwia ręcznego umieszczania plików css i js (można to zrobić, jednak
+nie jest to wskazane). Zamiast tego zaleca się tworzenie głównego komponentu tak,
 aby dziedziczył po <code>\Nbml\Component\Application</code>. Komponent Application posiada
 zmienną styleSheets która to jest typu <code>\Nbml\Collection</code>. Można do niej dodawać
 pliki styli na przykład w ten sposób:</p>
@@ -601,7 +601,7 @@ pliki styli na przykład w ten sposób:</p>
 <p>Dokładnie taką operację wykonuje znacznik <a href="#metadata-tags-css">[Css]</a>. Jako, że <code>Application::getInstance()</code>
 zwraca zawsze ostatnio utworzoną instancję (za pomocą <code>new</code>) to w momencie
 tworzenia mamy właśnie do niej dostęp. W systemie nie powinna być tworzona
-kolejna instancja Application. Wysyłamy do klienta tylko jedną strone html!
+kolejna instancja Application. Wysyłamy do klienta tylko jedną strone HTML!
 Oczywiście mogą się pojawić wyjątki (chociaż ciężko mi wymyśleć jakieś).
 W takim przypadku należy pamiętać o tym, że <code>Application::getInstance()</code>
 zwraca zawsze ostatnio utworzoną instancję.</p>
@@ -630,10 +630,10 @@ Component content...
 <code>&lt;link href=&quot;/Example/MyComponent/myComponent.css&quot; .../&gt;</code></p>
 
 <p>Gdy zdefiniujemy ścieżkę jako ścieżkę bezwzględną: <code>[Css('/myComponent.css')]</code>
-to zostanie ona niezmieniona: <code>&lt;link href=&quot;/myComponent.css&quot; .../&gt;</code>.</p>
+to pozostanie ona niezmieniona: <code>&lt;link href=&quot;/myComponent.css&quot; .../&gt;</code>.</p>
 
-<p>W przypadku pracyz plikami zdalnymi należy pamiętać o wstawieniu http lub https
-przy definiowaniu lokalizacji pliku css tak aby ścieżka nie została rozwinięta
+<p>W przypadku pracy z plikami zdalnymi należy pamiętać o wstawieniu HTTP lub HTTPS
+przy definiowaniu lokalizacji pliku css tak, aby ścieżka nie została rozwinięta
 do ścieżki bezwzględnej - system musi wiedzieć, że chodzi o plik zdalny.
 Dla przykładu ścieżka tego typu: <code>[Css('example.com/file.css')]</code> użyta w powyższym
 komponencie zostanie rozwinięta do: <code>/Example/MyComponent/example.com/file.css.</code>
@@ -644,7 +644,7 @@ Poprawną formą powinno być podanie <strong>http</strong> na początku w ten s
 
 <h3 id="przypisanieznacznikadozmiennej">Przypisanie znacznika do zmiennej</h3>
 
-<p>Ten znacznik nie jest związany z zmienną do której jest przypisany jednak
+<p>Ten znacznik nie jest związany ze zmienną do której jest przypisany, jednak
 powinien być przypisany do jakiejś zmiennej.</p>
 
 <p>Poniżej znajduje się błędna konstrukcja:</p>
@@ -675,7 +675,7 @@ Podobnie działa metadata tag <a href="#metadata-tags-js">[Js]</a>.</p>
 <h2 id="metadata-tags-js">Metadata Tags - Js</h2>
 
 <p>Działanie znacznika <a href="#metadata-tags-js">[Js]</a> jest identyczne z działaniem znacznika
-<a href="#metadata-tags-css">[Css]</a> z tą różnicą, że odpowiada on za dodawnie plików JavaScript.
+<a href="#metadata-tags-css">[Css]</a> z tą różnicą, że odpowiada on za dodawanie plików JavaScript.
 Powoduje on dodanie następującej linijki w konstruktorze komponentu:</p>
 
 <pre><code>\Nbml\Component\Application::getInstance()-&gt;scripts()-&gt;add('file.js');
@@ -727,7 +727,7 @@ interface MetadataTag
 
 <h2 id="przykadowymetadatatag">Przykładowy Metadata tag</h2>
 
-<p>Załóżmy, że chcemy zbudować własny metadata tag <code>[Hello]</code> który to dodawał by do zmiennej do której jest przypisany łańcuch znaków: “Hello ”. Oto treść tego znacznika:</p>
+<p>Załóżmy, że chcemy zbudować własny metadata tag <code>[Hello]</code> który to dodawałby do zmiennej do której jest przypisany, łańcuch znaków: “Hello ”. Oto treść tego znacznika:</p>
 
 <p>Treść takiego procesora metadata tagów była by następująca:</p>
 
@@ -774,14 +774,14 @@ class HelloMetadataTag extends \Nbml\MetadataTag\AbstractMetadataTag
 echo new HelloComponent(); //Hello Miwa
 </code></pre>
 
-<p>Pisząc komponenty mamy dostęp dozmiennej <code>$this-&gt;variable</code> oraz <code>$this-&gt;definition</code>.
+<p>Pisząc komponenty mamy dostęp do zmiennej <code>$this-&gt;variable</code> oraz <code>$this-&gt;definition</code>.
 Zmienna <code>$this-&gt;variable</code> jest typu <code>\Nbml\Reflector\Variable</code> i jest w niej pełen opis
 zmiennej do kórej dany metadata tag jest przypisany.</p>
 
 <p>Natomiast zmienna <code>$this-&gt;definition</code>
 jest definicją danego metadata tagu (w tym przypadku definicją meta tagu Hello).
 Jest ona typu: \Nbml\Reflector\MetadataTagDefinition. W tym obiekcie znajdziemy
-wszystkie dane o atrybutach (i ich wartościach) danego metadata tagu</p>
+wszystkie dane o atrybutach (i ich wartościach) danego metadata tagu.</p>
 
 <p>Czasem budując pewien metadata tag może powstać konieczność ingerencji w całą
 budowaną klasę komponentu. Z pomocą przychodzi nam właściwość <code>$this-&gt;classReflection</code>
@@ -827,7 +827,7 @@ class Component
 </code></pre>
 
 <p>Jak widać jest to bardzo krótka, lekka klasa. Gotowa do rozbudowywania.
-Pisząc komponenty interpreter nadpisuje funkcję <code>__invoke()</code>. Rolą funkcji __invoke()
-jest zapełnienie zmiennej <code>$this-&gt;text</code></p>
+Pisząc komponenty interpreter nadpisuje funkcję <code>__invoke()</code>, a rolą funkcji __invoke()
+jest zapełnienie zmiennej <code>$this-&gt;text</code>.</p>
 
 <p>Pozostaje mi już tylko pozostawić ciebie twojej wyobraźni:)</p>

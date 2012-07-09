@@ -4,7 +4,7 @@ namespace Blog;
 class Form extends \Nbml\Component
 {
 
-  static public $DIR = 'D:\Dokumenty\nbml\strona_projektu\www\vendor\finalclass\nbml\examples\blog\Blog\Form\Form.nbml';
+  static public $PATH = 'D:\Dokumenty\nbml\strona_projektu\www\vendor\finalclass\nbml\examples\blog\Blog\Form\Form.nbml';
 
   /**
    * @return \Blog\Form

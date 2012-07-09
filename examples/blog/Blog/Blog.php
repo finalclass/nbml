@@ -4,7 +4,7 @@
 class Blog extends \Nbml\Component
 {
 
-  static public $DIR = 'D:\Dokumenty\nbml\strona_projektu\www\vendor\finalclass\nbml\examples\blog\Blog\Blog.nbml';
+  static public $PATH = 'D:\Dokumenty\nbml\strona_projektu\www\vendor\finalclass\nbml\examples\blog\Blog\Blog.nbml';
 
   /**
    * @return \Blog

@@ -4,7 +4,7 @@ namespace Blog;
 class MenuButton extends \Nbml\Component
 {
 
-  static public $DIR = 'D:\Dokumenty\nbml\strona_projektu\www\vendor\finalclass\nbml\examples\blog\Blog\MenuButton\MenuButton.nbml';
+  static public $PATH = 'D:\Dokumenty\nbml\strona_projektu\www\vendor\finalclass\nbml\examples\blog\Blog\MenuButton\MenuButton.nbml';
 
   /**
    * @return \Blog\MenuButton
