@@ -19,10 +19,10 @@ Powyższa klasa tworzy zadaną zmienną w momencie jej użycia
 	  <?php endif; ?>
 	 </div>
 
-W powyższym przykładzie w miejsce $subComponent zostaje utworzona klasa OnDemandFactory
+W powyższym przykładzie w miejsce $subComponent zostaje utworzona klasa OnDemandFactory,
 a następnie (tylko gdy rand(0, 9) > 4) OnDemandFactory w momencie __toString()
-tworzy obiekt klasy \Nbml\Component jak to było zadane w phpDoc.
+tworzy obiekt klasy \Nbml\Component jak to było zadane w PHPDoc.
 
-Powyższy przykład ma za cel zaprezentowanie koncepcji działania znacznika \[OnDemand\]
+Powyższy przykład ma za cel zaprezentowanie koncepcji działania znacznika \[OnDemand\],
 jest on jednak bezużyteczny. \[OnDemand\] sprawdza się idealnie przy "ciężkich" komponentach
 których inicjalizacja wiąże się z dużym obciążeniem systemu.

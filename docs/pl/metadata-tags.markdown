@@ -1,6 +1,6 @@
 # Metadata Tags [metadata-tags]
 
-Nbml wykorzystuje phpdoc do definiowania obiektów. Przykładowo taka konstrukcja:
+Nbml wykorzystuje PHPDoc do definiowania obiektów. Przykładowo taka konstrukcja:
 
 	<?php /**
 	 * @var $this \Nbml\Component
@@ -16,9 +16,9 @@ W bibliotece standardowej mamy do dyspozycji następujące tagi: [\[Public\]][me
 
 ### Atrybuty Metadata tagów
 
-Metadata tagi mogą przyjmować pewne atrybuty. Jeżeli dany Metatag przyjmuje atrybuty może
-on również mieć zdefiniowany atrybut domyślny. Dla przykładu atrybut [\[State\]][metadata-tags-state] może być parametryzowany
-przez atrybut `name` który to jest atrybutem domyślnym. Zatem zapis:
+Metadata tagi mogą przyjmować pewne atrybuty. Jeżeli dany metatag przyjmuje atrybuty, może 
+również mieć zdefiniowany atrybut domyślny. Dla przykładu atrybut [\[State\]][metadata-tags-state] może być parametryzowany
+przez atrybut `name`, który to jest atrybutem domyślnym. Zatem zapis:
 
 	* [OnState(name='selected')]
 
@@ -26,9 +26,9 @@ jest równoznaczny z zapisem:
 
 	* [OnState('selected')]
 
-W przypadku gdy metadata tag przyjmuje więcej atrybutów ich nazwy powinny być oddzielone przecinkami w ten sposób:
+W przypadku gdy metadata tag przyjmuje więcej atrybutów, ich nazwy powinny być oddzielone przecinkami w ten sposób:
 
 	* [Tag(attr1='value1', attr2='value2', attr3='value3')]
 
-Interpreter umożliwia również prostę tworzenie własnych Metadata tagów.
+Interpreter umożliwia również proste tworzenie własnych Metadata tagów.
 Proces ten opisany jest w tym miejscu [Własne Metadata tagi][custom-metadata-tags]

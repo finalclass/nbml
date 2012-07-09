@@ -4,8 +4,8 @@ Metadata tag [\[Css\]][metadata-tags-css] służy do ładowania plików css.
 Nbml dostarcza podstawową
 wersję komponentu który jest dokumentem html: `\Nbml\Component\Application`.
 Można tę wersję rozbudować według własnych potrzeb. Należy zwrócić uwagę, że
-nbml nie umożliwia ręcznego umieszczania plików css i js (można to zrobić jednak
-nie jest to wskazane). Zamiast tego zaleca się tworzenie głównego komponentu tak
+nbml nie umożliwia ręcznego umieszczania plików css i js (można to zrobić, jednak
+nie jest to wskazane). Zamiast tego zaleca się tworzenie głównego komponentu tak,
 aby dziedziczył po `\Nbml\Component\Application`. Komponent Application posiada
 zmienną styleSheets która to jest typu `\Nbml\Collection`. Można do niej dodawać
 pliki styli na przykład w ten sposób:
@@ -15,7 +15,7 @@ pliki styli na przykład w ten sposób:
 Dokładnie taką operację wykonuje znacznik [\[Css\]][metadata-tags-css]. Jako, że `Application::getInstance()`
 zwraca zawsze ostatnio utworzoną instancję (za pomocą `new`) to w momencie
 tworzenia mamy właśnie do niej dostęp. W systemie nie powinna być tworzona
-kolejna instancja Application. Wysyłamy do klienta tylko jedną strone html!
+kolejna instancja Application. Wysyłamy do klienta tylko jedną strone HTML!
 Oczywiście mogą się pojawić wyjątki (chociaż ciężko mi wymyśleć jakieś).
 W takim przypadku należy pamiętać o tym, że `Application::getInstance()`
 zwraca zawsze ostatnio utworzoną instancję.
@@ -43,10 +43,10 @@ to ścieżka względna zostanie rozwinięta w ten sposób:
 `<link href="/Example/MyComponent/myComponent.css" .../>`
 
 Gdy zdefiniujemy ścieżkę jako ścieżkę bezwzględną: `[Css('/myComponent.css')]`
-to zostanie ona niezmieniona: `<link href="/myComponent.css" .../>`.
+to pozostanie ona niezmieniona: `<link href="/myComponent.css" .../>`.
 
-W przypadku pracyz plikami zdalnymi należy pamiętać o wstawieniu http lub https
-przy definiowaniu lokalizacji pliku css tak aby ścieżka nie została rozwinięta
+W przypadku pracy z plikami zdalnymi należy pamiętać o wstawieniu HTTP lub HTTPS
+przy definiowaniu lokalizacji pliku css tak, aby ścieżka nie została rozwinięta
 do ścieżki bezwzględnej - system musi wiedzieć, że chodzi o plik zdalny.
 Dla przykładu ścieżka tego typu: `[Css('example.com/file.css')]` użyta w powyższym
 komponencie zostanie rozwinięta do:  `/Example/MyComponent/example.com/file.css.`
@@ -57,7 +57,7 @@ Ta sama zasada tyczy się znacznika [\[Js\]][metadata-tags-js]
 
 ## Przypisanie znacznika do zmiennej
 
-Ten znacznik nie jest związany z zmienną do której jest przypisany jednak
+Ten znacznik nie jest związany ze zmienną do której jest przypisany, jednak
 powinien być przypisany do jakiejś zmiennej.
 
 Poniżej znajduje się błędna konstrukcja:

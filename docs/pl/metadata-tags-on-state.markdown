@@ -2,11 +2,11 @@
 
 Ustawienie na pewnym komponencie metatagu [\[OnState\]][metadata-tags-on-state]
 powoduje ustawienie warunku na danej zmiennej.
-**Zmienna zostanie zainicjalizowana tylko w przypadku gdy komponent znajdujować się będzie w zadanym stanie.**
+**Zmienna zostanie zainicjalizowana tylko w przypadku, gdy komponent znajdujować się będzie w zadanym stanie.**
 W przeciwnym wypadku jej wartość będzie pustym łańcuchem znaków.
 
 Metadata tag [\[OnState\]][metadata-tags-on-state]
-przyjmuje jeden argument `name` określający nazwę stanu w którym dana
+przyjmuje jeden argument `name`, określający nazwę stanu w którym dana
 zmienna ma się zainicjalizować. Argument `name` jest argumentem domyślnym więc nie
 ma konieczności pisać `[OnState(name='stateName')]`, można skorzystać ze skróconej
 formy: `[OnState('stateName')]`.

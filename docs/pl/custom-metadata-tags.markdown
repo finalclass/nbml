@@ -42,7 +42,7 @@ Z pomocą przychodzi klasa `\Nbml\MetadataTag\AbstractMetadataTag` która to imp
 
 ## Przykładowy Metadata tag
 
-Załóżmy, że chcemy zbudować własny metadata tag `[Hello]` który to dodawał by do zmiennej do której jest przypisany łańcuch znaków: “Hello ”. Oto treść tego znacznika:
+Załóżmy, że chcemy zbudować własny metadata tag `[Hello]` który to dodawałby do zmiennej do której jest przypisany, łańcuch znaków: “Hello ”. Oto treść tego znacznika:
 
 Treść takiego procesora metadata tagów była by następująca:
 
@@ -85,14 +85,14 @@ Wywołanie tego komponentu:
 	<?php
 	echo new HelloComponent(); //Hello Miwa
 
-Pisząc komponenty mamy dostęp dozmiennej `$this->variable` oraz `$this->definition`.
+Pisząc komponenty mamy dostęp do zmiennej `$this->variable` oraz `$this->definition`.
 Zmienna `$this->variable` jest typu `\Nbml\Reflector\Variable` i jest w niej pełen opis
 zmiennej do kórej dany metadata tag jest przypisany.
 
 Natomiast zmienna `$this->definition`
 jest definicją danego metadata tagu (w tym przypadku definicją meta tagu Hello).
 Jest ona typu: \Nbml\Reflector\MetadataTagDefinition. W tym obiekcie znajdziemy
-wszystkie dane o atrybutach (i ich wartościach) danego metadata tagu
+wszystkie dane o atrybutach (i ich wartościach) danego metadata tagu.
 
 Czasem budując pewien metadata tag może powstać konieczność ingerencji w całą
 budowaną klasę komponentu. Z pomocą przychodzi nam właściwość `$this->classReflection`
@@ -136,7 +136,7 @@ Rzućmy okiem na jej treść:
 	}
 
 Jak widać jest to bardzo krótka, lekka klasa. Gotowa do rozbudowywania.
-Pisząc komponenty interpreter nadpisuje funkcję `__invoke()`. Rolą funkcji __invoke()
-jest zapełnienie zmiennej `$this->text`
+Pisząc komponenty interpreter nadpisuje funkcję `__invoke()`, a rolą funkcji __invoke()
+jest zapełnienie zmiennej `$this->text`.
 
 Pozostaje mi już tylko pozostawić ciebie twojej wyobraźni:)
