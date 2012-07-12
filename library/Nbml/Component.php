@@ -45,7 +45,7 @@ class Component
             $this->__invoke();
         } catch(\Exception $e) {
             echo (string)$e;
-            trigger_error((string)$e);
+            //trigger_error((string)$e);
         }
         return $this->text;
     }

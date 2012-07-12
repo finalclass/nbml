@@ -1,0 +1,5 @@
+<?php /** @var $this \Nbml\ClassBuilder */?>
+<?php foreach($this->getReflection()->getVariables() as $var): ?>
+$this->options['<?php echo $var->getNameUnderscored()?>'] = <?php
+    echo $var->getDefaultValue() ? $var->getDefaultValue() : 'null'; ?>;
+<?php endforeach; ?>

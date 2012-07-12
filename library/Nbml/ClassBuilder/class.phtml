@@ -16,12 +16,11 @@ class <?php echo $this->getReflection()->getClassName(); ?> extends <?php echo $
     return new <?php echo $this->getReflection()->getFullClassName(); ?>();
   }
 
-<?php echo $this->renderPhtml('options_declaration'); ?>
-
 
 	public function __construct($options = array())
 	{
         parent::__construct($options);
+        <?php echo $this->renderPhtml('basic_initialization'); ?>
 		<?php echo $this->renderPhtml('initializators') . PHP_EOL; ?>
 	}
 
