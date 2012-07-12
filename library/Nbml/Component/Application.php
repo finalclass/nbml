@@ -143,6 +143,7 @@ class Application extends Component
     <?php
         return ob_get_clean();
         } catch (\Exception $e) {
+            echo (string)$e;
             trigger_error((string)$e);
             return '';
         }
