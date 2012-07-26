@@ -192,9 +192,13 @@ class Variable
 
     public function getDefaultValue()
     {
-        if ($this->defaultValue && $this->getType() == 'array') {
+        if($this->getType() == 'array') {
+            if (!$this->defaultValue) {
+                $this->defaultValue = '';
+            }
             return 'array(' . $this->defaultValue . ')';
         }
+
         return $this->defaultValue;
     }
 
